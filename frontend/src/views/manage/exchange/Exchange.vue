@@ -112,7 +112,8 @@ export default {
     columns () {
       return [{
         title: '用户编号',
-        dataIndex: 'code'
+        dataIndex: 'code',
+        ellipsis: true
       }, {
         title: '兑换用户',
         dataIndex: 'userName',
@@ -122,7 +123,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '用户头像',
         dataIndex: 'userImages',
@@ -144,7 +146,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '收货地址',
         dataIndex: 'address',
@@ -154,7 +157,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '消耗积分',
         dataIndex: 'integral',
@@ -164,7 +168,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '兑换物品',
         dataIndex: 'materialName',
@@ -174,7 +179,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '物品图片',
         dataIndex: 'materialImages',
@@ -196,7 +202,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '操作',
         dataIndex: 'operation',

@@ -108,10 +108,12 @@ export default {
     columns () {
       return [{
         title: '客户编号',
-        dataIndex: 'code'
+        dataIndex: 'code',
+        ellipsis: true
       }, {
         title: '客户名称',
-        dataIndex: 'name'
+        dataIndex: 'name',
+        ellipsis: true
       }, {
         title: '联系方式',
         dataIndex: 'phone',
@@ -121,7 +123,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '邮箱地址',
         dataIndex: 'mail',
@@ -131,7 +134,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '头像',
         dataIndex: 'images',
@@ -153,7 +157,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }]
     }
   },

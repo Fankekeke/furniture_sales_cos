@@ -104,7 +104,8 @@ export default {
     columns () {
       return [{
         title: '会员编号',
-        dataIndex: 'userCode'
+        dataIndex: 'userCode',
+        ellipsis: true
       }, {
         title: '会员名称',
         dataIndex: 'userName',
@@ -114,7 +115,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '用户头像',
         dataIndex: 'userImages',
@@ -136,7 +138,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '商家地址',
         dataIndex: 'address',
@@ -146,7 +149,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '负责人',
         dataIndex: 'principal',
@@ -156,7 +160,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '联系方式',
         dataIndex: 'phone',
@@ -166,7 +171,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '商家图片',
         dataIndex: 'images',
@@ -188,7 +194,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '上次消费时间',
         dataIndex: 'lastDate',
@@ -198,7 +205,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '操作',
         dataIndex: 'operation',

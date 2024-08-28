@@ -131,11 +131,13 @@ export default {
     columns () {
       return [{
         title: '标题',
-        dataIndex: 'title'
+        dataIndex: 'title',
+        ellipsis: true
       }, {
         title: '公告内容',
         dataIndex: 'content',
-        scopedSlots: { customRender: 'contentShow' }
+        scopedSlots: { customRender: 'contentShow' },
+        ellipsis: true
       }, {
         title: '发布时间',
         dataIndex: 'createDate',
@@ -145,7 +147,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '上下架',
         dataIndex: 'type',
@@ -168,7 +171,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '操作',
         dataIndex: 'operation',

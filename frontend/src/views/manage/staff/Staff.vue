@@ -130,10 +130,12 @@ export default {
     columns () {
       return [{
         title: '员工姓名',
-        dataIndex: 'name'
+        dataIndex: 'name',
+        ellipsis: true
       }, {
         title: '员工编号',
-        dataIndex: 'code'
+        dataIndex: 'code',
+        ellipsis: true
       }, {
         title: '性别',
         dataIndex: 'sex',
@@ -171,7 +173,8 @@ export default {
             default:
               return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '商家编号',
         dataIndex: 'merchantCode',
@@ -181,7 +184,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '所属商家',
         dataIndex: 'merchantName',
@@ -191,7 +195,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '创建时间',
         dataIndex: 'createDate',
@@ -201,7 +206,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '操作',
         dataIndex: 'operation',

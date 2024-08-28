@@ -109,10 +109,12 @@ export default {
     columns () {
       return [{
         title: '物品编号',
-        dataIndex: 'code'
+        dataIndex: 'code',
+        ellipsis: true
       }, {
         title: '物品名称',
-        dataIndex: 'name'
+        dataIndex: 'name',
+        ellipsis: true
       }, {
         title: '物品图片',
         dataIndex: 'images',
@@ -134,7 +136,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '所需积分',
         dataIndex: 'integral',
@@ -144,7 +147,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '销量',
         dataIndex: 'saleNum',
@@ -164,7 +168,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '操作',
         dataIndex: 'operation',

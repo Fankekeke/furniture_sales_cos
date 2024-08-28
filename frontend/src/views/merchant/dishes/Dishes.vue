@@ -128,10 +128,12 @@ export default {
     columns () {
       return [{
         title: '家具编号',
-        dataIndex: 'code'
+        dataIndex: 'code',
+        ellipsis: true
       }, {
         title: '家具名称',
-        dataIndex: 'name'
+        dataIndex: 'name',
+        ellipsis: true
       }, {
         title: '家具图片',
         dataIndex: 'images',
@@ -153,7 +155,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '商家图片',
         dataIndex: 'merchantImages',
@@ -175,7 +178,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '型号',
         dataIndex: 'portion',
@@ -185,7 +189,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '余量',
         dataIndex: 'laveNum',
@@ -195,7 +200,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '价格',
         dataIndex: 'unitPrice',

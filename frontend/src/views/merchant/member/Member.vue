@@ -119,7 +119,8 @@ export default {
     columns () {
       return [{
         title: '商家编号',
-        dataIndex: 'code'
+        dataIndex: 'code',
+        ellipsis: true
       }, {
         title: '商家名称',
         dataIndex: 'name',
@@ -129,7 +130,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '商家图片',
         dataIndex: 'images',
@@ -151,7 +153,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '详细地址',
         dataIndex: 'address',
@@ -161,7 +164,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '会员所需积分',
         dataIndex: 'integral',
@@ -181,7 +185,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '操作',
         dataIndex: 'operation',

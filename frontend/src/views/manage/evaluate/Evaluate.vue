@@ -129,7 +129,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '用户头像',
         dataIndex: 'userImages',
@@ -151,7 +152,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '折后价格',
         dataIndex: 'afterOrderPrice',
@@ -175,7 +177,8 @@ export default {
       }, {
         title: '评价内容',
         dataIndex: 'content',
-        scopedSlots: {customRender: 'evaluateShow'}
+        scopedSlots: {customRender: 'evaluateShow'},
+        ellipsis: true
       }, {
         title: '评价图片',
         dataIndex: 'images',
@@ -197,7 +200,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '获得积分',
         dataIndex: 'integral',
@@ -217,7 +221,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '操作',
         dataIndex: 'operation',

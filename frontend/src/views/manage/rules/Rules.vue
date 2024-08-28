@@ -132,9 +132,11 @@ export default {
       return [{
         title: '规则编号',
         dataIndex: 'code',
+        ellipsis: true
       }, {
         title: '规则内容',
-        dataIndex: 'remark'
+        dataIndex: 'remark',
+        ellipsis: true
       }, {
         title: '价格',
         dataIndex: 'unitPrice',
@@ -144,7 +146,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '创建时间',
         dataIndex: 'createDate',
@@ -154,7 +157,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '操作',
         dataIndex: 'operation',
