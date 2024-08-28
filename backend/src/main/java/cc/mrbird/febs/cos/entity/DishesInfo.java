@@ -50,9 +50,9 @@ public class DishesInfo implements Serializable {
     private String rawMaterial;
 
     /**
-     * 份量
+     * 型号
      */
-    private Integer portion;
+    private String portion;
 
     /**
      * 口味
@@ -103,6 +103,11 @@ public class DishesInfo implements Serializable {
      * 脂肪
      */
     private BigDecimal fat;
+
+    /**
+     * 余量
+     */
+    private Integer laveNum;
 
     @TableField(exist = false)
     private String merchantName;

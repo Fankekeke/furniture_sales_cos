@@ -21,6 +21,7 @@
             di.heat,
             di.protein,
             di.fat,
+            di.lave_num,
             mi.name as merchantName,
             mi.principal,
             mi.phone,

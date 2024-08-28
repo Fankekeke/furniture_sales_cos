@@ -7,7 +7,7 @@
           <div :class="advanced ? null: 'fold'">
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="菜品编号"
+                label="家具编号"
                 :labelCol="{span: 5}"
                 :wrapperCol="{span: 18, offset: 1}">
                 <a-input v-model="queryParams.code"/>
@@ -15,7 +15,7 @@
             </a-col>
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="菜品名称"
+                label="家具名称"
                 :labelCol="{span: 5}"
                 :wrapperCol="{span: 18, offset: 1}">
                 <a-input v-model="queryParams.name"/>
@@ -127,13 +127,13 @@ export default {
     }),
     columns () {
       return [{
-        title: '菜品编号',
+        title: '家具编号',
         dataIndex: 'code'
       }, {
-        title: '菜品名称',
+        title: '家具名称',
         dataIndex: 'name'
       }, {
-        title: '菜品图片',
+        title: '家具图片',
         dataIndex: 'images',
         customRender: (text, record, index) => {
           if (!record.images) return <a-avatar shape="square" icon="user" />
@@ -177,7 +177,7 @@ export default {
           }
         }
       }, {
-        title: '份量',
+        title: '型号',
         dataIndex: 'portion',
         customRender: (text, row, index) => {
           if (text !== null) {
@@ -187,8 +187,8 @@ export default {
           }
         }
       }, {
-        title: '口味',
-        dataIndex: 'taste',
+        title: '余量',
+        dataIndex: 'laveNum',
         customRender: (text, row, index) => {
           if (text !== null) {
             return text
@@ -261,7 +261,7 @@ export default {
     },
     handledishesAddSuccess () {
       this.dishesAdd.visiable = false
-      this.$message.success('新增菜品成功')
+      this.$message.success('新增家具成功')
       this.search()
     },
     edit (record) {
@@ -273,7 +273,7 @@ export default {
     },
     handledishesEditSuccess () {
       this.dishesEdit.visiable = false
-      this.$message.success('修改菜品成功')
+      this.$message.success('修改家具成功')
       this.search()
     },
     handleDeptChange (value) {

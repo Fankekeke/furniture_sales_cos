@@ -90,7 +90,7 @@
                   </div>
                   <div style="margin-top: 150px;text-align: center"  v-if="checkList.length === 0">
                     <a-icon type="smile" theme="twoTone" style="font-size: 75px"/>
-                    <h1 style="margin-top: 20px">请选择菜品</h1>
+                    <h1 style="margin-top: 20px">请选择家具</h1>
                   </div>
                 </div>
               </div>
@@ -105,7 +105,7 @@
                   <div v-if="checkList.length !== 0" style="font-size: 12px;font-family: SimHei">
                     <a-table :columns="columns1" :rowKey="record => record.id" :data-source="checkList" :pagination="false">
                     </a-table>
-                    <a-alert :message="'购买菜品热量【'+totalHeat+'】 超过600，请合理规划饮食' " banner v-if="totalHeat > 600"/>
+                    <a-alert :message="'购买家具热量【'+totalHeat+'】 超过600，请合理规划饮食' " banner v-if="totalHeat > 600"/>
                     <a-row style="padding-left: 20px;padding-right: 20px;margin-top: 30px">
                       <a-col style="margin-bottom: 15px"><span style="font-size: 13px;font-weight: 650;color: #000c17">选择 外送/堂食</span></a-col>
                       <a-col :span="24">
@@ -127,7 +127,7 @@
                         </a-select>
                       </a-col>
                     </a-row>
-                    <div style="padding-left: 20px;margin-top: 25px;text-align: right;padding-right: 30px"><span>菜品合计</span>
+                    <div style="padding-left: 20px;margin-top: 25px;text-align: right;padding-right: 30px"><span>家具合计</span>
                       <span style="color: red">{{ totalPrice }} 元</span>
                     </div>
                     <div style="padding-left: 20px;margin-top: 5px;text-align: right;padding-right: 30px" v-if="orderAddInfo.isMember == 1"><span>会员折扣</span>
@@ -142,7 +142,7 @@
                   </div>
                   <div style="margin-top: 150px;text-align: center"  v-if="checkList.length === 0">
                     <a-icon type="smile" theme="twoTone" style="font-size: 75px"/>
-                    <h1 style="margin-top: 20px">请选择菜品</h1>
+                    <h1 style="margin-top: 20px">请选择家具</h1>
                   </div>
                 </div>
               </div>
@@ -205,7 +205,7 @@ export default {
     }),
     columns () {
       return [{
-        title: '菜品名称',
+        title: '家具名称',
         dataIndex: 'name'
       }, {
         title: '图片',
@@ -246,7 +246,7 @@ export default {
     },
     columns1 () {
       return [{
-        title: '菜品名称',
+        title: '家具名称',
         dataIndex: 'name'
       }, {
         title: '图片',
@@ -405,7 +405,7 @@ export default {
     },
     next () {
       if (this.checkList.length === 0) {
-        this.$message.warn('请选择菜品信息')
+        this.$message.warn('请选择家具信息')
         return false
       }
       this.nextFlag = 2

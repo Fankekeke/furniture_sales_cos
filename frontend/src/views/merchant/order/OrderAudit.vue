@@ -110,7 +110,7 @@
     <br/>
     <div style="font-size: 13px;font-family: SimHei" v-if="orderItemInfo.length !== 0">
       <a-row style="padding-left: 24px;padding-right: 24px;" :gutter="15">
-        <a-col style="margin-bottom: 15px"><span style="font-size: 15px;font-weight: 650;color: #000c17">购买菜品</span></a-col>
+        <a-col style="margin-bottom: 15px"><span style="font-size: 15px;font-weight: 650;color: #000c17">购买家具</span></a-col>
         <a-col :span="18">
           <a-table :columns="columns" :data-source="orderItemInfo" :pagination="false"></a-table>
         </a-col>
@@ -203,7 +203,7 @@ export default {
     },
     columns () {
       return [{
-        title: '菜品名称',
+        title: '家具名称',
         dataIndex: 'dishesName'
       }, {
         title: '图片',

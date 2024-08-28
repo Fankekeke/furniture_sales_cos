@@ -1,5 +1,5 @@
 <template>
-  <a-modal v-model="show" title="修改菜品" @cancel="onClose" :width="800">
+  <a-modal v-model="show" title="修改家具" @cancel="onClose" :width="800">
     <template slot="footer">
       <a-button key="back" @click="onClose">
         取消
@@ -11,10 +11,10 @@
     <a-form :form="form" layout="vertical">
       <a-row :gutter="20">
         <a-col :span="12">
-          <a-form-item label='菜品名称' v-bind="formItemLayout">
+          <a-form-item label='家具名称' v-bind="formItemLayout">
             <a-input v-decorator="[
             'name',
-            { rules: [{ required: true, message: '请输入菜品名称!' }] }
+            { rules: [{ required: true, message: '请输入家具名称!' }] }
             ]"/>
           </a-form-item>
         </a-col>
@@ -27,18 +27,10 @@
           </a-form-item>
         </a-col>
         <a-col :span="12">
-          <a-form-item label='份量' v-bind="formItemLayout">
-            <a-input-number style="width: 100%" v-decorator="[
-            'portion',
-            { rules: [{ required: true, message: '请输入份量!' }] }
-            ]" :min="1" :step="1"/>
-          </a-form-item>
-        </a-col>
-        <a-col :span="12">
-          <a-form-item label='口味' v-bind="formItemLayout">
+          <a-form-item label='型号' v-bind="formItemLayout">
             <a-input v-decorator="[
-            'taste',
-            { rules: [{ required: true, message: '请输入口味!' }] }
+            'portion',
+            { rules: [{ required: true, message: '请输入型号!' }] }
             ]"/>
           </a-form-item>
         </a-col>
@@ -51,10 +43,10 @@
           </a-form-item>
         </a-col>
         <a-col :span="12">
-          <a-form-item label='菜品状态' v-bind="formItemLayout">
+          <a-form-item label='家具状态' v-bind="formItemLayout">
             <a-select v-decorator="[
               'status',
-              { rules: [{ required: true, message: '请输入菜品状态!' }] }
+              { rules: [{ required: true, message: '请输入家具状态!' }] }
               ]">
               <a-select-option value="0">下架</a-select-option>
               <a-select-option value="1">上架</a-select-option>
@@ -62,34 +54,18 @@
           </a-form-item>
         </a-col>
         <a-col :span="12">
-          <a-form-item label='热量含量' v-bind="formItemLayout">
+          <a-form-item label='家具余量' v-bind="formItemLayout">
             <a-input-number style="width: 100%" v-decorator="[
-            'heat',
-            { rules: [{ required: true, message: '请输入热量含量!' }] }
-            ]" :min="0.1" :step="0.1"/>
-          </a-form-item>
-        </a-col>
-        <a-col :span="12">
-          <a-form-item label='蛋白质含量' v-bind="formItemLayout">
-            <a-input-number style="width: 100%" v-decorator="[
-            'protein',
-            { rules: [{ required: true, message: '请输入蛋白质含量!' }] }
-            ]" :min="0.1" :step="0.1"/>
-          </a-form-item>
-        </a-col>
-        <a-col :span="12">
-          <a-form-item label='脂肪含量' v-bind="formItemLayout">
-            <a-input-number style="width: 100%" v-decorator="[
-            'fat',
-            { rules: [{ required: true, message: '请输入脂肪含量!' }] }
-            ]" :min="0.1" :step="0.1"/>
+            'laveNum',
+            { rules: [{ required: true, message: '请输入家具余量!' }] }
+            ]" :min="1" :step="1"/>
           </a-form-item>
         </a-col>
         <a-col :span="24">
-          <a-form-item label='菜品描述' v-bind="formItemLayout">
+          <a-form-item label='家具描述' v-bind="formItemLayout">
             <a-textarea :rows="6" v-decorator="[
             'content',
-             { rules: [{ required: true, message: '请输入菜品描述!' }] }
+             { rules: [{ required: true, message: '请输入家具描述!' }] }
             ]"/>
           </a-form-item>
         </a-col>
@@ -189,7 +165,7 @@ export default {
     },
     setFormValues ({...dishes}) {
       this.rowId = dishes.id
-      let fields = ['name', 'content', 'rawMaterial', 'portion', 'taste', 'unitPrice', 'status', 'heat', 'protein', 'fat']
+      let fields = ['name', 'content', 'rawMaterial', 'portion', 'unitPrice', 'status', 'heat', 'protein', 'laveNum']
       let obj = {}
       Object.keys(dishes).forEach((key) => {
         if (key === 'images') {

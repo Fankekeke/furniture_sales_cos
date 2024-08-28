@@ -23,9 +23,46 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b51975f-5e37-45a1-bd9d-0f3c12f944d0" name="Default Changelist" comment="fix -地图展示">
+      <change beforePath="$PROJECT_DIR$/../backend/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/resources/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/menu/SiderMenu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/menu/SiderMenu.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/store/modules/setting.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/modules/setting.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/merchant/personal/Personal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/merchant/personal/Personal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/HomePage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/HomePage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/common/HeaderAvatar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/common/HeaderAvatar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/login/Common.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/login/Common.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/login/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/login/Login.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/manage/component/user/Map.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/component/user/Map.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/manage/dishes/Dishes.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/dishes/Dishes.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/manage/dishes/DishesAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/dishes/DishesAdd.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/manage/dishes/DishesEdit.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/dishes/DishesEdit.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/manage/dishes/DishesView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/dishes/DishesView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/manage/evaluate/OrderView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/evaluate/OrderView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/manage/map/Map.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/map/Map.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/manage/order/OrderAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/order/OrderAdd.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/manage/order/OrderAudit.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/order/OrderAudit.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/manage/order/OrderStatus.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/order/OrderStatus.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/manage/order/OrderView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/order/OrderView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/merchant/dishes/Dishes.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/merchant/dishes/Dishes.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/merchant/dishes/DishesAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/merchant/dishes/DishesAdd.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/merchant/dishes/DishesEdit.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/merchant/dishes/DishesEdit.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/merchant/dishes/DishesView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/merchant/dishes/DishesView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/merchant/evaluate/OrderView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/merchant/evaluate/OrderView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/merchant/merchantMember/MerchantMemberView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/merchant/merchantMember/MerchantMemberView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/merchant/order/OrderAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/merchant/order/OrderAdd.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/merchant/order/OrderAudit.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/merchant/order/OrderAudit.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/merchant/order/OrderStatus.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/merchant/order/OrderStatus.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/merchant/order/OrderView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/merchant/order/OrderView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/user/evaluate/OrderView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/user/evaluate/OrderView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/user/order/OrderAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/user/order/OrderAdd.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/user/order/OrderAudit.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/user/order/OrderAudit.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/user/order/OrderEvaluate.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/user/order/OrderEvaluate.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/user/order/OrderStatus.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/user/order/OrderStatus.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/user/order/OrderView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/user/order/OrderView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/img/house.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/static/img/house.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,22 +91,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;G:/Project/点餐配送系统/canteen_order_cos/frontend/src/views/user/order&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;D:\\办公软件\\WebStorm 2022.3.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "G:/Project/20240725家居销售系统/furniture_sales_cos/frontend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "yarn",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "D:\\办公软件\\WebStorm 2022.3.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="G:\Project\点餐配送系统\canteen_order_cos\frontend\src\views\user\order" />
@@ -257,6 +294,7 @@
       <workItem from="1705590331240" duration="14000" />
       <workItem from="1706852766695" duration="107000" />
       <workItem from="1711424435331" duration="1273000" />
+      <workItem from="1724841739768" duration="8402000" />
     </task>
     <task id="LOCAL-00001" summary="fix -数据统计">
       <created>1692717658877</created>
