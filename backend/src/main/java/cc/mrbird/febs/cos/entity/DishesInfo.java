@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * 菜品管理
+ * 家具管理
  *
  * @author FanK
  */
@@ -30,17 +30,17 @@ public class DishesInfo implements Serializable {
     private Integer id;
 
     /**
-     * 菜品编号
+     * 家具编号
      */
     private String code;
 
     /**
-     * 菜品名称
+     * 家具名称
      */
     private String name;
 
     /**
-     * 菜品描述
+     * 家具描述
      */
     private String content;
 

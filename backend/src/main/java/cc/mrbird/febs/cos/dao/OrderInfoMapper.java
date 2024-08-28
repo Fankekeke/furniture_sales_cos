@@ -56,7 +56,7 @@ public interface OrderInfoMapper extends BaseMapper<OrderInfo> {
     List<LinkedHashMap<String, Object>> selectOrderPriceWithinDays(@Param("merchantId") Integer merchantId);
 
     /**
-     * 订单销售菜品类别统计
+     * 订单销售家具类别统计
      *
      * @param merchantId 商家ID
      * @return 结果

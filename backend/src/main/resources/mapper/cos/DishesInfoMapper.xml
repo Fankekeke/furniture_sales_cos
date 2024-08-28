@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cc.mrbird.febs.cos.dao.DishesInfoMapper">
 
-    <!-- 分页获取菜品信息 -->
+    <!-- 分页获取家具信息 -->
     <select id="selectDishesPage" resultType="java.util.LinkedHashMap">
         select
             di.id,

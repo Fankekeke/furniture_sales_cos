@@ -14,10 +14,10 @@ import java.util.LinkedHashMap;
 public interface IDishesInfoService extends IService<DishesInfo> {
 
     /**
-     * 分页获取菜品信息
+     * 分页获取家具信息
      *
      * @param page       分页对象
-     * @param dishesInfo 菜品信息
+     * @param dishesInfo 家具信息
      * @return 结果
      */
     IPage<LinkedHashMap<String, Object>> selectDishesPage(Page<DishesInfo> page, DishesInfo dishesInfo);

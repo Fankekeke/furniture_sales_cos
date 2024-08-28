@@ -54,7 +54,7 @@ public class MerchantInfoServiceImpl extends ServiceImpl<MerchantInfoMapper, Mer
      * 根据商家获取订单评价信息
      *
      * @param merchantId 商家ID
-     * @param dishesId   菜品ID
+     * @param dishesId   家具ID
      * @return 结果
      */
     @Override
@@ -109,7 +109,7 @@ public class MerchantInfoServiceImpl extends ServiceImpl<MerchantInfoMapper, Mer
         result.put("orderNumDayList", orderInfoMapper.selectOrderNumWithinDays(merchantInfo.getId()));
         // 近十天销售金额统计
         result.put("priceDayList", orderInfoMapper.selectOrderPriceWithinDays(merchantInfo.getId()));
-        // 销售菜品统计
+        // 销售家具统计
         result.put("orderDrugType", orderInfoMapper.selectOrderDishesType(merchantInfo.getId()));
         // 公告信息
         result.put("bulletinInfoList", bulletinInfoService.list(Wrappers.<BulletinInfo>lambdaQuery().eq(BulletinInfo::getRackUp, 1)));
@@ -160,7 +160,7 @@ public class MerchantInfoServiceImpl extends ServiceImpl<MerchantInfoMapper, Mer
         result.put("orderNumDayList", orderInfoMapper.selectOrderNumWithinDays(null));
         // 近十天销售金额统计
         result.put("priceDayList", orderInfoMapper.selectOrderPriceWithinDays(null));
-        // 销售菜品统计
+        // 销售家具统计
         result.put("orderDrugType", orderInfoMapper.selectOrderDishesType(null));
         // 公告信息
         result.put("bulletinInfoList", bulletinInfoService.list(Wrappers.<BulletinInfo>lambdaQuery().eq(BulletinInfo::getRackUp, 1)));

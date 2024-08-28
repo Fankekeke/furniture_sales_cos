@@ -120,7 +120,7 @@
         '%Y')
     </select>
 
-    <!-- 订单销售菜品类别统计 -->
+    <!-- 订单销售家具类别统计 -->
     <select id="selectOrderDishesType" resultType="java.util.LinkedHashMap">
         select sum(oii.amount) as count, di.name from
         order_item_info oii
