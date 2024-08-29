@@ -91,7 +91,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
         UserInfo userInfo = userInfoService.getOne(Wrappers.<UserInfo>lambdaQuery().eq(UserInfo::getUserId, orderInfo.getUserId()));
 
         orderInfo.setUserId(userInfo.getId());
-        // 如果为外送 计算配送费用
+        // 如果为配送 计算配送费用
         if ("1".equals(orderInfo.getType())) {
             // 获取送货地址
             AddressInfo addressInfo = addressInfoService.getById(orderInfo.getAddressId());
@@ -193,7 +193,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
         // 用户信息
         UserInfo userInfo = userInfoService.getOne(Wrappers.<UserInfo>lambdaQuery().eq(UserInfo::getUserId, orderInfo.getUserId()));
 
-        // 如果为外送 计算配送费用
+        // 如果为配送 计算配送费用
         if ("1".equals(orderInfo.getType())) {
             // 获取送货地址
             AddressInfo addressInfo = addressInfoService.getById(orderInfo.getAddressId());
@@ -236,7 +236,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
             throw new FebsException("订单详情不能为空");
         }
 
-        // 如果为外送 计算配送费用
+        // 如果为配送 计算配送费用
         if ("1".equals(orderInfo.getType())) {
             // 获取送货地址
             AddressInfo addressInfo = addressInfoService.getById(orderInfo.getAddressId());
@@ -549,7 +549,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     }
 
     /**
-     * 外送订单选择配送员
+     * 配送订单选择配送员
      *
      * @param orderCode 订单编号
      * @param staffId   员工ID

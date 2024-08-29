@@ -107,20 +107,20 @@
                     </a-table>
                     <a-alert :message="'购买家具热量【'+totalHeat+'】 超过600，请合理规划饮食' " banner v-if="totalHeat > 600"/>
                     <a-row style="padding-left: 20px;padding-right: 20px;margin-top: 30px">
-                      <a-col style="margin-bottom: 15px"><span style="font-size: 13px;font-weight: 650;color: #000c17">选择 外送/堂食</span></a-col>
+                      <a-col style="margin-bottom: 15px"><span style="font-size: 13px;font-weight: 650;color: #000c17">选择 配送/店内购买</span></a-col>
                       <a-col :span="24">
                         <a-radio-group button-style="solid" v-model="type">
                           <a-radio-button value="0">
-                            堂食
+                            店内购买
                           </a-radio-button>
                           <a-radio-button value="1">
-                            外送
+                            配送
                           </a-radio-button>
                         </a-radio-group>
                       </a-col>
                     </a-row>
                     <a-row style="padding-left: 20px;padding-right: 20px;margin-top: 30px"  v-if="type == 1">
-                      <a-col style="margin-bottom: 15px"><span style="font-size: 13px;font-weight: 650;color: #000c17">选择 外送地址</span></a-col>
+                      <a-col style="margin-bottom: 15px"><span style="font-size: 13px;font-weight: 650;color: #000c17">选择 配送地址</span></a-col>
                       <a-col :span="12" v-if="type == 1">
                         <a-select v-model="addressId" style="width: 100%" @change="handleChange">
                           <a-select-option v-for="(item, index) in addressList" :value="item.id" :key="index">{{ item.address }}</a-select-option>

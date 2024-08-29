@@ -34,8 +34,8 @@
             <span v-if="orderInfo.status === '3'" style="color: green">已收货</span>
           </a-col>
           <a-col :span="6"><b>订单类型：</b>
-            <span v-if="orderInfo.type === '0'">堂食</span>
-            <span v-if="orderInfo.type === '1'">外送</span>
+            <span v-if="orderInfo.type === '0'">店内购买</span>
+            <span v-if="orderInfo.type === '1'">配送</span>
           </a-col>
           <a-col :span="6"><b>下单时间：</b>
             {{ orderInfo.createDate }}

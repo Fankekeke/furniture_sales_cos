@@ -7,7 +7,15 @@
           <div :class="advanced ? null: 'fold'">
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="订单编号"
+                label="类型名称"
+                :labelCol="{span: 5}"
+                :wrapperCol="{span: 18, offset: 1}">
+                <a-input v-model="queryParams.name"/>
+              </a-form-item>
+            </a-col>
+            <a-col :md="6" :sm="24">
+              <a-form-item
+                label="类型编号"
                 :labelCol="{span: 5}"
                 :wrapperCol="{span: 18, offset: 1}">
                 <a-input v-model="queryParams.code"/>
@@ -15,18 +23,10 @@
             </a-col>
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="用户名称"
+                label="备注"
                 :labelCol="{span: 5}"
                 :wrapperCol="{span: 18, offset: 1}">
-                <a-input v-model="queryParams.userName"/>
-              </a-form-item>
-            </a-col>
-            <a-col :md="6" :sm="24">
-              <a-form-item
-                label="商家名称"
-                :labelCol="{span: 5}"
-                :wrapperCol="{span: 18, offset: 1}">
-                <a-input v-model="queryParams.merchantName"/>
+                <a-input v-model="queryParams.remark"/>
               </a-form-item>
             </a-col>
           </div>
@@ -39,7 +39,7 @@
     </div>
     <div>
       <div class="operator">
-<!--        <a-button type="primary" ghost @click="add">添加订单</a-button>-->
+        <a-button type="primary" ghost @click="add">新增</a-button>
         <a-button @click="batchDelete">删除</a-button>
       </div>
       <!-- 表格区域 -->
@@ -63,77 +63,44 @@
           </template>
         </template>
         <template slot="operation" slot-scope="text, record">
-          <a-icon type="file-search" @click="orderViewOpen(record)" title="详 情"></a-icon>
-          <a-icon v-if="record.status == 1 && record.type == 0" type="check" @click="orderComplete(record)" title="订单完成" style="margin-left: 15px"></a-icon>
-          <a-icon v-if="record.addressId != null && (record.status == 1 || record.status == 2)" type="setting" theme="twoTone" twoToneColor="#4a9ff5" @click="orderAuditOpen(record)" title="修 改" style="margin-left: 15px"></a-icon>
-          <a-icon v-if="record.type == 1" type="cluster" @click="orderMapOpen(record)" title="地 图" style="margin-left: 15px"></a-icon>
+          <a-icon type="setting" theme="twoTone" twoToneColor="#4a9ff5" @click="edit(record)" title="修 改" style="margin-left: 15px"></a-icon>
         </template>
       </a-table>
     </div>
-    <order-audit
-      @close="handleorderAuditViewClose"
-      @success="handleorderAuditViewSuccess"
-      :orderShow="orderAuditView.visiable"
-      :orderData="orderAuditView.data">
-    </order-audit>
-    <order-status
-      @close="handleorderStatusViewClose"
-      @success="handleorderStatusViewSuccess"
-      :orderStatusShow="orderStatusView.visiable"
-      :orderStatusData="orderStatusView.data">
-    </order-status>
-    <order-view
-      @close="handleorderViewClose"
-      :orderShow="orderView.visiable"
-      :orderData="orderView.data">
-    </order-view>
-    <order-add
-      @close="handleorderAddClose"
-      @success="handleorderAddSuccess"
-      :orderAddShow="orderAdd.visiable">
-    </order-add>
-    <MapView
-      @close="handleorderMapViewClose"
-      :orderShow="orderMapView.visiable"
-      :orderData="orderMapView.data">
-    </MapView>
+    <firnitureType-add
+      v-if="firnitureTypeAdd.visiable"
+      @close="handlefirnitureTypeAddClose"
+      @success="handlefirnitureTypeAddSuccess"
+      :firnitureTypeAddVisiable="firnitureTypeAdd.visiable">
+    </firnitureType-add>
+    <firnitureType-edit
+      ref="firnitureTypeEdit"
+      @close="handlefirnitureTypeEditClose"
+      @success="handlefirnitureTypeEditSuccess"
+      :firnitureTypeEditVisiable="firnitureTypeEdit.visiable">
+    </firnitureType-edit>
   </a-card>
 </template>
 
 <script>
 import RangeDate from '@/components/datetime/RangeDate'
+import firnitureTypeAdd from './FirnitureTypeAdd.vue'
+import firnitureTypeEdit from './FirnitureTypeEdit.vue'
 import {mapState} from 'vuex'
 import moment from 'moment'
-import OrderAdd from './OrderAdd'
-import OrderAudit from './OrderAudit'
-import OrderView from './OrderView'
-import OrderStatus from './OrderStatus.vue'
-import MapView from '../../manage/map/Map.vue'
 moment.locale('zh-cn')
 
 export default {
-  name: 'order',
-  components: {OrderView, OrderAudit, RangeDate, OrderStatus, OrderAdd, MapView},
+  name: 'firnitureType',
+  components: {firnitureTypeAdd, firnitureTypeEdit, RangeDate},
   data () {
     return {
       advanced: false,
-      orderAdd: {
+      firnitureTypeAdd: {
         visiable: false
       },
-      orderEdit: {
+      firnitureTypeEdit: {
         visiable: false
-      },
-      orderMapView: {
-        visiable: false,
-        data: null
-      },
-      orderView: {
-        visiable: false,
-        data: null
-      },
-      orderStatusView: {
-        visiable: false,
-        data: null
       },
       queryParams: {},
       filteredInfo: null,
@@ -150,10 +117,6 @@ export default {
         showSizeChanger: true,
         showTotal: (total, range) => `显示 ${range[0]} ~ ${range[1]} 条记录，共 ${total} 条记录`
       },
-      orderAuditView: {
-        visiable: false,
-        data: null
-      },
       userList: []
     }
   },
@@ -163,12 +126,41 @@ export default {
     }),
     columns () {
       return [{
-        title: '订单编号',
+        title: '家具类型编号',
         dataIndex: 'code',
         ellipsis: true
       }, {
-        title: '下单用户',
-        dataIndex: 'userName',
+        title: '家具类型姓名',
+        dataIndex: 'name',
+        ellipsis: true
+      }, {
+        title: '性别',
+        dataIndex: 'sex',
+        customRender: (text, row, index) => {
+          switch (text) {
+            case 1:
+              return <a-tag>男</a-tag>
+            case 2:
+              return <a-tag>女</a-tag>
+            default:
+              return '- -'
+          }
+        }
+      }, {
+        title: '类型图片',
+        dataIndex: 'images',
+        customRender: (text, record, index) => {
+          if (!record.images) return <a-avatar shape="square" icon="user" />
+          return <a-popover>
+            <template slot="content">
+              <a-avatar shape="square" size={132} icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.images.split(',')[0] } />
+            </template>
+            <a-avatar shape="square" icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.images.split(',')[0] } />
+          </a-popover>
+        }
+      }, {
+        title: '备注',
+        dataIndex: 'remark',
         customRender: (text, row, index) => {
           if (text !== null) {
             return text
@@ -178,92 +170,7 @@ export default {
         },
         ellipsis: true
       }, {
-        title: '用户头像',
-        dataIndex: 'userImages',
-        customRender: (text, record, index) => {
-          if (!record.userImages) return <a-avatar shape="square" icon="user" />
-          return <a-popover>
-            <template slot="content">
-              <a-avatar shape="square" size={132} icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.userImages.split(',')[0] } />
-            </template>
-            <a-avatar shape="square" icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.userImages.split(',')[0] } />
-          </a-popover>
-        }
-      }, {
-        title: '所属商家',
-        dataIndex: 'merchantName',
-        customRender: (text, row, index) => {
-          if (text !== null) {
-            return text
-          } else {
-            return '- -'
-          }
-        },
-        ellipsis: true
-      }, {
-        title: '商家图片',
-        dataIndex: 'merchantImages',
-        customRender: (text, record, index) => {
-          if (!record.merchantImages) return <a-avatar shape="square" icon="user" />
-          return <a-popover>
-            <template slot="content">
-              <a-avatar shape="square" size={132} icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.merchantImages.split(',')[0] } />
-            </template>
-            <a-avatar shape="square" icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.merchantImages.split(',')[0] } />
-          </a-popover>
-        }
-      }, {
-        title: '订单价格（元）',
-        dataIndex: 'orderPrice',
-        customRender: (text, row, index) => {
-          if (text !== null) {
-            return text + '元'
-          } else {
-            return '- -'
-          }
-        }
-      }, {
-        title: '折后价格（元）',
-        dataIndex: 'afterOrderPrice',
-        customRender: (text, row, index) => {
-          if (text !== null) {
-            return text + '元'
-          } else {
-            return '- -'
-          }
-        }
-      }, {
-        title: '订单状态',
-        dataIndex: 'status',
-        customRender: (text, row, index) => {
-          switch (text) {
-            case '0':
-              return <a-tag color="red">未支付</a-tag>
-            case '1':
-              return <a-tag>已支付</a-tag>
-            case '2':
-              return <a-tag>配送中</a-tag>
-            case '3':
-              return <a-tag>已收货</a-tag>
-            default:
-              return '- -'
-          }
-        }
-      }, {
-        title: '订单类型',
-        dataIndex: 'type',
-        customRender: (text, row, index) => {
-          switch (text) {
-            case '0':
-              return <a-tag>店内购买</a-tag>
-            case '1':
-              return <a-tag>配送</a-tag>
-            default:
-              return '- -'
-          }
-        }
-      }, {
-        title: '下单时间',
+        title: '创建时间',
         dataIndex: 'createDate',
         customRender: (text, row, index) => {
           if (text !== null) {
@@ -284,53 +191,6 @@ export default {
     this.fetch()
   },
   methods: {
-    orderComplete (row) {
-      this.$get(`/cos/order-info/audit`, {
-        'orderCode': row.code,
-        'status': 3
-      }).then((r) => {
-        this.$message.success('订单完成')
-        this.fetch()
-      })
-    },
-    orderMapOpen (row) {
-      this.orderMapView.data = row
-      this.orderMapView.visiable = true
-    },
-    handleorderMapViewClose () {
-      this.orderMapView.visiable = false
-    },
-    orderStatusOpen (row) {
-      this.orderStatusView.data = row
-      this.orderStatusView.visiable = true
-    },
-    orderAuditOpen (row) {
-      this.orderAuditView.data = row
-      this.orderAuditView.visiable = true
-    },
-    orderViewOpen (row) {
-      this.orderView.data = row
-      this.orderView.visiable = true
-    },
-    handleorderViewClose () {
-      this.orderView.visiable = false
-    },
-    handleorderStatusViewClose () {
-      this.orderStatusView.visiable = false
-    },
-    handleorderStatusViewSuccess () {
-      this.orderStatusView.visiable = false
-      this.$message.success('修改成功')
-      this.fetch()
-    },
-    handleorderAuditViewClose () {
-      this.orderAuditView.visiable = false
-    },
-    handleorderAuditViewSuccess () {
-      this.orderAuditView.visiable = false
-      this.$message.success('设置成功')
-      this.fetch()
-    },
     onSelectChange (selectedRowKeys) {
       this.selectedRowKeys = selectedRowKeys
     },
@@ -338,26 +198,26 @@ export default {
       this.advanced = !this.advanced
     },
     add () {
-      this.orderAdd.visiable = true
+      this.firnitureTypeAdd.visiable = true
     },
-    handleorderAddClose () {
-      this.orderAdd.visiable = false
+    handlefirnitureTypeAddClose () {
+      this.firnitureTypeAdd.visiable = false
     },
-    handleorderAddSuccess () {
-      this.orderAdd.visiable = false
-      this.$message.success('添加平台订单成功')
+    handlefirnitureTypeAddSuccess () {
+      this.firnitureTypeAdd.visiable = false
+      this.$message.success('新增家具类型成功')
       this.search()
     },
     edit (record) {
-      this.$refs.orderEdit.setFormValues(record)
-      this.orderEdit.visiable = true
+      this.$refs.firnitureTypeEdit.setFormValues(record)
+      this.firnitureTypeEdit.visiable = true
     },
-    handleorderEditClose () {
-      this.orderEdit.visiable = false
+    handlefirnitureTypeEditClose () {
+      this.firnitureTypeEdit.visiable = false
     },
-    handleorderEditSuccess () {
-      this.orderEdit.visiable = false
-      this.$message.success('修改成功')
+    handlefirnitureTypeEditSuccess () {
+      this.firnitureTypeEdit.visiable = false
+      this.$message.success('修改家具类型成功')
       this.search()
     },
     handleDeptChange (value) {
@@ -375,7 +235,7 @@ export default {
         centered: true,
         onOk () {
           let ids = that.selectedRowKeys.join(',')
-          that.$delete('/cos/order-info/' + ids).then(() => {
+          that.$delete('/cos/firniture-type-info/' + ids).then(() => {
             that.$message.success('删除成功')
             that.selectedRowKeys = []
             that.search()
@@ -448,8 +308,7 @@ export default {
       if (params.status === undefined) {
         delete params.status
       }
-      params.merchantId = this.currentUser.userId
-      this.$get('/cos/order-info/page', {
+      this.$get('/cos/firniture-type-info/page', {
         ...params
       }).then((r) => {
         let data = r.data.data

@@ -98,7 +98,7 @@ public interface IOrderInfoService extends IService<OrderInfo> {
     boolean orderPay(String orderCode);
 
     /**
-     * 外送订单选择配送员
+     * 配送订单选择配送员
      *
      * @param orderCode 订单编号
      * @param staffId   员工ID

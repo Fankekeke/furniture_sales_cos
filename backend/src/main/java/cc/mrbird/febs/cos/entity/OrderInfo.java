@@ -72,7 +72,7 @@ public class OrderInfo implements Serializable {
     private String status;
 
     /**
-     * 订单类型（0.堂食 1.外送）
+     * 订单类型（0.店内购买 1.配送）
      */
     private String type;
 

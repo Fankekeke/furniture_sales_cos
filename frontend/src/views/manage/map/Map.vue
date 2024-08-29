@@ -56,8 +56,8 @@
                   <br/>
                   <a-row style="padding-left: 24px;padding-right: 24px;" v-if="orderInfo.type === '1'">
                     <a-col :span="8"><b>订单类型：</b>
-                      <span v-if="orderInfo.type === '0'">堂食</span>
-                      <span v-if="orderInfo.type === '1'">外送</span>
+                      <span v-if="orderInfo.type === '0'">店内购买</span>
+                      <span v-if="orderInfo.type === '1'">配送</span>
                     </a-col>
                     <a-col :span="8"><b>下单时间：</b>
                       {{ orderInfo.createDate }}
