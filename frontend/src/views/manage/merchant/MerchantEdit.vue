@@ -61,21 +61,6 @@
             ]"/>
           </a-form-item>
         </a-col>
-        <a-col :span="12">
-          <a-form-item label='菜系' v-bind="formItemLayout">
-            <a-select v-decorator="[
-            'dishes',
-            { rules: [{ required: true, message: '请输入菜系!' }] }
-            ]">
-              <a-select-option value="川菜">川菜</a-select-option>
-              <a-select-option value="湘菜">湘菜</a-select-option>
-              <a-select-option value="粤菜">粤菜</a-select-option>
-              <a-select-option value="快餐">快餐</a-select-option>
-              <a-select-option value="西餐">西餐</a-select-option>
-              <a-select-option value="中餐">中餐</a-select-option>
-            </a-select>
-          </a-form-item>
-        </a-col>
         <a-col :span="24">
           <a-form-item label='营业星期' v-bind="formItemLayout">
             <div :style="{ borderBottom: '1px solid #E9E9E9' }">

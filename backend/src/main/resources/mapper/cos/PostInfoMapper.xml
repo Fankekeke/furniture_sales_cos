@@ -33,8 +33,8 @@
         <if test="postInfo.tagId != null and postInfo.tagId != ''">
             AND pi.tag_ids LIKE CONCAT('%',#{postInfo.tagId},'%')
         </if>
-        <if test="postInfo.studentId != null and postInfo.studentId != ''">
-            AND si.user_id = #{postInfo.studentId}
+        <if test="postInfo.userId != null and postInfo.userId != ''">
+            AND si.user_id = #{postInfo.userId}
         </if>
         group by pi.id
         order by

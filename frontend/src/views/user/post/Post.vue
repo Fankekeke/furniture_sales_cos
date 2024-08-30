@@ -152,7 +152,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '头像',
         dataIndex: 'userImages',
@@ -168,11 +169,11 @@ export default {
       }, {
         title: '标题',
         dataIndex: 'title',
-        scopedSlots: { customRender: 'titleShow' }
+        ellipsis: true
       }, {
         title: '贴子内容',
         dataIndex: 'content',
-        scopedSlots: { customRender: 'contentShow' }
+        ellipsis: true
       }, {
         title: '所属模块',
         dataIndex: 'tagName',
@@ -192,7 +193,8 @@ export default {
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '操作',
         dataIndex: 'operation',
@@ -339,7 +341,7 @@ export default {
       if (params.tagId === undefined) {
         delete params.tagId
       }
-      params.studentId = this.currentUser.userId
+      params.userId = this.currentUser.userId
       this.$get('/cos/post-info/page', {
         ...params
       }).then((r) => {

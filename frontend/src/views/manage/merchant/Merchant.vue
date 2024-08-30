@@ -195,17 +195,6 @@ export default {
         },
         ellipsis: true
       }, {
-        title: '菜系',
-        dataIndex: 'dishes',
-        customRender: (text, row, index) => {
-          if (text !== null) {
-            return text
-          } else {
-            return '- -'
-          }
-        },
-        ellipsis: true
-      }, {
         title: '创建时间',
         dataIndex: 'createDate',
         customRender: (text, row, index) => {

@@ -5,33 +5,37 @@
     <!-- 分页获取家具信息 -->
     <select id="selectDishesPage" resultType="java.util.LinkedHashMap">
         select
-            di.id,
-            di.code,
-            di.name,
-            di.content,
-            di.raw_material,
-            di.portion,
-            di.taste,
-            di.unit_price,
-            di.sale_num,
-            di.status,
-            di.merchant_id,
-            di.create_date,
-            di.images,
-            di.heat,
-            di.protein,
-            di.fat,
-            di.lave_num,
-            mi.name as merchantName,
-            mi.principal,
-            mi.phone,
-            mi.images as merchantImages
+        di.id,
+        di.code,
+        di.name,
+        di.content,
+        di.raw_material,
+        di.portion,
+        di.taste,
+        di.unit_price,
+        di.sale_num,
+        di.status,
+        di.merchant_id,
+        di.create_date,
+        di.images,
+        di.heat,
+        di.protein,
+        di.fat,
+        di.lave_num,
+        di.type_id,
+        mi.name as merchantName,
+        mi.principal,
+        mi.phone,
+        mi.images as merchantImages,
+        fti.name as typeName
         from
-            dishes_info di
-                left join merchant_info mi on
-                (mi.id = di.merchant_id)
+        dishes_info di
+        left join merchant_info mi on
+        (mi.id = di.merchant_id)
+        left join firniture_type_info fti on
+        (fti.id = di.type_id)
         where
-            1 = 1
+        1 = 1
         <if test="dishesInfo.code != null and dishesInfo.code != ''">
             AND di.code LIKE CONCAT('%',#{dishesInfo.code},'%')
         </if>
@@ -45,7 +49,7 @@
             AND mi.user_id = #{dishesInfo.merchantId}
         </if>
         order by
-            di.create_date desc
+        di.create_date desc
 
     </select>
 </mapper>

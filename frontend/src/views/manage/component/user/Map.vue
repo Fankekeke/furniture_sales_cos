@@ -8,7 +8,7 @@
     wrapClassName="aa"
     :getContainer="false"
   >
-    <div style="width: 100%">
+    <div style="width: 100%;background-color: #f6f5f5">
       <a-icon type="arrow-left" style="position: absolute;z-index: 999;color: red;font-size: 20px;margin: 15px" @click="home"/>
       <a-row style="height:100vh;font-family: SimHei">
         <a-col :span="15" style="height: 100%;">
@@ -22,15 +22,15 @@
                         <img :src="'http://127.0.0.1:9527/imagesWeb/'+item" style="width: 100%;height: 250px">
                       </div>
                     </a-carousel>
-                    <a-card-meta :title="item.name" :description="item.content.slice(0, 25)+'...'" style="margin-top: 10px"></a-card-meta>
+                    <a-card-meta :title="item.name" :description="item.content.slice(0, 15)+'...'" style="margin-top: 10px"></a-card-meta>
                     <div style="font-size: 12px;font-family: SimHei;margin-top: 8px;margin-bottom: 5px">
                       <a-row>
                         <a-col :span="18">
                           <div>
                             <span>{{ item.rawMaterial }}</span> |
-                            <span  style="margin-left: 2px">{{ item.taste }}</span>
+                            <span  style="margin-left: 2px">{{ item.portion }}</span>
                           </div>
-                          <div style="color: #f5222d; font-size: 13px;float: left">{{ item.unitPrice }}元</div>
+                          <div style="color: #f5222d; font-size: 13px;float: left;margin-top: 5px">{{ item.unitPrice }}元</div>
                         </a-col>
                         <a-col :span="6" style="height: 100%;text-align: right">
                           <a-icon type="plus-square" theme="twoTone" style="font-size: 20px;margin-right: 5px;margin-top: 10px;cursor: pointer;" @click="dishesAdd(item)" v-show="nextFlag == 1"/>

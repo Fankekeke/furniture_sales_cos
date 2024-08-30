@@ -2,8 +2,8 @@
   <div style="background:#ECECEC; padding:30px;margin-top: 30px;margin-bottom: 30px">
     <div style="height: 450px;">
       <div style="height: 350px;background-image: url(../static/img/house.jpg);padding: 50px">
-        <div style="font-size: 35px;font-weight: 500;color: white;font-family: SimHei">你好 朋友</div>
-        <div style="font-size: 22px;font-weight: 500;color: white;font-family: SimHei">开始点餐</div>
+        <div style="font-size: 35px;font-weight: 500;color: white;font-family: SimHei">欢迎来到居然之家~</div>
+        <div style="font-size: 22px;font-weight: 500;color: white;font-family: SimHei">开始选购</div>
         <div style="height: 180px;margin-top: 100px">
           <a-card :bordered="false" hoverable style="height: 100%;box-shadow: 3px 3px 3px rgba(0, 0, 0, .2);color:#fff">
             <a-row style="padding: 50px;margin: 0 auto">
@@ -18,16 +18,6 @@
                     </a-button>
                   </a-col>
                   <a-col :span="24"></a-col>
-                  <a-col :span="24" style="font-size: 15px;font-family: SimHei">
-                    <div style="margin-top: 30px">
-                      <a style="margin-right: 15px">川菜</a>
-                      <a style="margin-right: 15px">湘菜</a>
-                      <a style="margin-right: 15px">粤菜</a>
-                      <a style="margin-right: 15px">快餐</a>
-                      <a style="margin-right: 15px">西餐</a>
-                      <a style="margin-right: 15px">中餐</a>
-                    </div>
-                  </a-col>
                 </a-row>
               </a-col>
               <a-col :span="6" :offset="2">

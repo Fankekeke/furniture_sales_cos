@@ -61,6 +61,16 @@
             ]" :min="1" :step="1"/>
           </a-form-item>
         </a-col>
+        <a-col :span="12">
+          <a-form-item label='家具类型' v-bind="formItemLayout">
+            <a-select style="width: 100%" v-decorator="[
+            'typeId',
+            { rules: [{ required: true, message: '请输入家具类型!' }] }
+            ]">
+              <a-select-option v-for="(item, index) in typeList" :value="item.id" :key="index">{{ item.name }}</a-select-option>
+            </a-select>
+          </a-form-item>
+        </a-col>
         <a-col :span="24">
           <a-form-item label='家具描述' v-bind="formItemLayout">
             <a-textarea :rows="6" v-decorator="[
@@ -136,11 +146,20 @@ export default {
       form: this.$form.createForm(this),
       loading: false,
       fileList: [],
+      typeList: [],
       previewVisible: false,
       previewImage: ''
     }
   },
+  mounted () {
+    this.selectTypeList()
+  },
   methods: {
+    selectTypeList () {
+      this.$get(`/cos/firniture-type-info/list`).then((r) => {
+        this.typeList = r.data.data
+      })
+    },
     handleCancel () {
       this.previewVisible = false
     },
@@ -165,7 +184,7 @@ export default {
     },
     setFormValues ({...dishes}) {
       this.rowId = dishes.id
-      let fields = ['name', 'content', 'rawMaterial', 'portion', 'unitPrice', 'status', 'heat', 'protein', 'laveNum']
+      let fields = ['name', 'content', 'rawMaterial', 'portion', 'unitPrice', 'status', 'heat', 'protein', 'laveNum', 'typeId']
       let obj = {}
       Object.keys(dishes).forEach((key) => {
         if (key === 'images') {

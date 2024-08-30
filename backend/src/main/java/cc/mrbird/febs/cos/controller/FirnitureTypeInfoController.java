@@ -64,6 +64,7 @@ public class FirnitureTypeInfoController {
      */
     @PostMapping
     public R save(FirnitureTypeInfo firnitureTypeInfo) {
+        firnitureTypeInfo.setCode("FT-" + System.currentTimeMillis());
         firnitureTypeInfo.setCreateDate(DateUtil.formatDateTime(new Date()));
         return R.ok(firnitureTypeInfoService.save(firnitureTypeInfo));
     }

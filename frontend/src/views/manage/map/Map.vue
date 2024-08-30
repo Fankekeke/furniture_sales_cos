@@ -118,9 +118,6 @@
                     <a-col :span="8"><b>联系方式：</b>
                       {{ merchantInfo.phone }}
                     </a-col>
-                    <a-col :span="8"><b>菜系：</b>
-                      {{ merchantInfo.dishes ? merchantInfo.dishes : '- -' }}
-                    </a-col>
                     <a-col :span="8"><b>负责人：</b>
                       {{ merchantInfo.principal }}
                     </a-col>

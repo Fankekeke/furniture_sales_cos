@@ -90,17 +90,17 @@ public class DishesInfo implements Serializable {
     private String images;
 
     /**
-     * 热量
+     * xx
      */
     private BigDecimal heat;
 
     /**
-     * 蛋白质
+     * xxx
      */
     private BigDecimal protein;
 
     /**
-     * 脂肪
+     * xxxx
      */
     private BigDecimal fat;
 
@@ -108,6 +108,11 @@ public class DishesInfo implements Serializable {
      * 余量
      */
     private Integer laveNum;
+
+    /**
+     * 家具类型
+     */
+    private Integer typeId;
 
     @TableField(exist = false)
     private String merchantName;

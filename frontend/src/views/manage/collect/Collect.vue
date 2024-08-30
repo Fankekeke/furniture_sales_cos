@@ -10,15 +10,23 @@
                 label="用户昵称"
                 :labelCol="{span: 4}"
                 :wrapperCol="{span: 18, offset: 2}">
-                <a-input v-model="queryParams.username"/>
+                <a-input v-model="queryParams.userName"/>
               </a-form-item>
             </a-col>
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="所属贴子"
+                label="家具类型"
                 :labelCol="{span: 4}"
                 :wrapperCol="{span: 18, offset: 2}">
-                <a-input v-model="queryParams.title"/>
+                <a-input v-model="queryParams.typeName"/>
+              </a-form-item>
+            </a-col>
+            <a-col :md="6" :sm="24">
+              <a-form-item
+                label="家具名称"
+                :labelCol="{span: 4}"
+                :wrapperCol="{span: 18, offset: 2}">
+                <a-input v-model="queryParams.firnitureName"/>
               </a-form-item>
             </a-col>
           </div>
@@ -137,12 +145,46 @@ export default {
           </a-popover>
         }
       }, {
-        title: '所属贴子',
-        dataIndex: 'title',
+        title: '家具名称',
+        dataIndex: 'firnitureName',
         ellipsis: true
       }, {
-        title: '消息内容',
-        dataIndex: 'content',
+        title: '家具类型',
+        dataIndex: 'typeName',
+        customRender: (text, row, index) => {
+          if (text !== null) {
+            return text
+          } else {
+            return '- -'
+          }
+        },
+        ellipsis: true
+      }, {
+        title: '型号',
+        dataIndex: 'portion',
+        customRender: (text, row, index) => {
+          if (text !== null) {
+            return text
+          } else {
+            return '- -'
+          }
+        },
+        ellipsis: true
+      }, {
+        title: '家具图片',
+        dataIndex: 'firnitureImages',
+        customRender: (text, record, index) => {
+          if (!record.firnitureImages) return <a-avatar shape="square" icon="user" />
+          return <a-popover>
+            <template slot="content">
+              <a-avatar shape="square" size={132} icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.firnitureImages } />
+            </template>
+            <a-avatar shape="square" icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.firnitureImages } />
+          </a-popover>
+        }
+      }, {
+        title: '所属商家',
+        dataIndex: 'merchantName',
         ellipsis: true
       }, {
         title: '发送时间',
@@ -253,8 +295,7 @@ export default {
         params.size = this.pagination.defaultPageSize
         params.current = this.pagination.defaultCurrent
       }
-      params.userId = this.currentUser.userId
-      this.$get('/cos/reply-info/page', {
+      this.$get('/cos/collect-info/page', {
         ...params
       }).then((r) => {
         let data = r.data.data

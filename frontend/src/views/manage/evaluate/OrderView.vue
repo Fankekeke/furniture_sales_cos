@@ -1,5 +1,5 @@
 <template>
-  <a-modal v-model="show" title="订单详情" @cancel="onClose" :width="1500">
+  <a-modal v-model="show" title="订单详情" @cancel="onClose" :width="1200">
     <template slot="footer">
       <a-button key="back" @click="onClose" type="danger">
         关闭
@@ -97,9 +97,6 @@
       <a-row style="padding-left: 24px;padding-right: 24px;">
         <a-col :span="6"><b>联系方式：</b>
           {{ merchantInfo.phone }}
-        </a-col>
-        <a-col :span="6"><b>菜系：</b>
-          {{ merchantInfo.dishes ? merchantInfo.dishes : '- -' }}
         </a-col>
       </a-row>
       <br/>

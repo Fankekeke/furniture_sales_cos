@@ -35,9 +35,6 @@
         <a-col :span="8"><b>纬度：</b>
           {{ merchantData.latitude }}
         </a-col>
-        <a-col :span="8"><b>所属菜系：</b>
-          {{ merchantData.dishes }}
-        </a-col>
       </a-row>
       <br/>
       <a-row style="padding-left: 24px;padding-right: 24px;">

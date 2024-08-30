@@ -30,8 +30,8 @@
         <if test="replyInfo.title != null and replyInfo.title != ''">
             AND poi.title LIKE CONCAT('%',#{replyInfo.title},'%')
         </if>
-        <if test="replyInfo.studentId != null and replyInfo.studentId != ''">
-            AND si.user_id = #{replyInfo.studentId}
+        <if test="replyInfo.userId != null and replyInfo.userId != ''">
+            AND si.user_id = #{replyInfo.userId}
         </if>
         order by
         send_create desc

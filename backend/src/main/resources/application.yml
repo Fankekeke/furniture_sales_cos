@@ -2,6 +2,13 @@ server:
   port: 9527
 
 spring:
+  # 文件上传
+  servlet:
+    multipart:
+      # 单个文件大小
+      max-file-size: 100MB
+      # 设置总上传的文件大小
+      max-request-size: 200MB
   mail:
     host: smtp.qq.com #发送邮件服务器
     username: 1258846421@qq.com #发送邮件的邮箱地址

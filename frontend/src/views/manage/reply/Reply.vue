@@ -122,7 +122,8 @@ export default {
     columns () {
       return [{
         title: '用户昵称',
-        dataIndex: 'userName'
+        dataIndex: 'userName',
+        ellipsis: true
       }, {
         title: '头像',
         dataIndex: 'userImages',
@@ -138,14 +139,15 @@ export default {
       }, {
         title: '所属贴子',
         dataIndex: 'title',
-        scopedSlots: {customRender: 'titleShow'}
+        ellipsis: true
       }, {
         title: '消息内容',
         dataIndex: 'content',
-        scopedSlots: {customRender: 'contentShow'}
+        ellipsis: true
       }, {
         title: '发送时间',
-        dataIndex: 'sendCreate'
+        dataIndex: 'sendCreate',
+        ellipsis: true
       }]
     }
   },

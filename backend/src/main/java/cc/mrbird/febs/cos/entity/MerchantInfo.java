@@ -87,7 +87,7 @@ public class MerchantInfo implements Serializable {
     private String createDate;
 
     /**
-     * 菜系
+     *
      */
     private String dishes;
 

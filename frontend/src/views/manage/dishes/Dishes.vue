@@ -135,6 +135,17 @@ export default {
         dataIndex: 'name',
         ellipsis: true
       }, {
+        title: '家具类型',
+        dataIndex: 'typeName',
+        customRender: (text, row, index) => {
+          if (text !== null) {
+            return text
+          } else {
+            return '- -'
+          }
+        },
+        ellipsis: true
+      }, {
         title: '家具图片',
         dataIndex: 'images',
         customRender: (text, record, index) => {
