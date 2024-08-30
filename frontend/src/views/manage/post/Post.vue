@@ -7,26 +7,28 @@
           <div :class="advanced ? null: 'fold'">
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="类型名称"
-                :labelCol="{span: 5}"
-                :wrapperCol="{span: 18, offset: 1}">
-                <a-input v-model="queryParams.name"/>
+                label="贴子标题"
+                :labelCol="{span: 4}"
+                :wrapperCol="{span: 18, offset: 2}">
+                <a-input v-model="queryParams.title"/>
               </a-form-item>
             </a-col>
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="类型编号"
-                :labelCol="{span: 5}"
-                :wrapperCol="{span: 18, offset: 1}">
-                <a-input v-model="queryParams.code"/>
+                label="发布人"
+                :labelCol="{span: 4}"
+                :wrapperCol="{span: 18, offset: 2}">
+                <a-input v-model="queryParams.userName"/>
               </a-form-item>
             </a-col>
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="备注"
-                :labelCol="{span: 5}"
-                :wrapperCol="{span: 18, offset: 1}">
-                <a-input v-model="queryParams.remark"/>
+                label="所属模块"
+                :labelCol="{span: 4}"
+                :wrapperCol="{span: 18, offset: 2}">
+                <a-select v-model="queryParams.tagId" allowClear>
+                  <a-select-option v-for="(item, index) in tagList" :key="index" :value="item.id">{{ item.name }}</a-select-option>
+                </a-select>
               </a-form-item>
             </a-col>
           </div>
@@ -54,6 +56,8 @@
                @change="handleTableChange">
         <template slot="titleShow" slot-scope="text, record">
           <template>
+            <a-badge v-if="record.deleteFlag == 1" status="error"/>
+            <a-badge v-if="record.deleteFlag == 0" status="processing"/>
             <a-tooltip>
               <template slot="title">
                 {{ record.title }}
@@ -62,44 +66,57 @@
             </a-tooltip>
           </template>
         </template>
+        <template slot="contentShow" slot-scope="text, record">
+          <template>
+            <a-tooltip>
+              <template slot="title">
+                {{ record.content }}
+              </template>
+              {{ record.content.slice(0, 30) }} ...
+            </a-tooltip>
+          </template>
+        </template>
         <template slot="operation" slot-scope="text, record">
-          <a-icon type="setting" theme="twoTone" twoToneColor="#4a9ff5" @click="edit(record)" title="修 改" style="margin-left: 15px"></a-icon>
+          <a-icon v-if="record.deleteFlag == 1" type="caret-up" @click="auditDelete(record)" title="up" style="margin-right: 10px"></a-icon>
+          <a-icon type="setting" theme="twoTone" twoToneColor="#4a9ff5" @click="edit(record)" title="修 改"></a-icon>
         </template>
       </a-table>
     </div>
-    <firnitureType-add
-      v-if="firnitureTypeAdd.visiable"
-      @close="handlefirnitureTypeAddClose"
-      @success="handlefirnitureTypeAddSuccess"
-      :firnitureTypeAddVisiable="firnitureTypeAdd.visiable">
-    </firnitureType-add>
-    <firnitureType-edit
-      ref="firnitureTypeEdit"
-      @close="handlefirnitureTypeEditClose"
-      @success="handlefirnitureTypeEditSuccess"
-      :firnitureTypeEditVisiable="firnitureTypeEdit.visiable">
-    </firnitureType-edit>
+    <post-add
+      v-if="postAdd.visiable"
+      @close="handlepostAddClose"
+      @success="handlepostAddSuccess"
+      :postAddVisiable="postAdd.visiable"
+      :tagList="tagListData">
+    </post-add>
+    <post-edit
+      ref="postEdit"
+      @close="handlepostEditClose"
+      @success="handlepostEditSuccess"
+      :postEditVisiable="postEdit.visiable"
+      :tagList="tagListData">
+    </post-edit>
   </a-card>
 </template>
 
 <script>
 import RangeDate from '@/components/datetime/RangeDate'
-import firnitureTypeAdd from './FirnitureTypeAdd.vue'
-import firnitureTypeEdit from './FirnitureTypeEdit.vue'
+import PostAdd from './PostAdd'
+import PostEdit from './PostEdit'
 import {mapState} from 'vuex'
 import moment from 'moment'
 moment.locale('zh-cn')
 
 export default {
-  name: 'firnitureType',
-  components: {firnitureTypeAdd, firnitureTypeEdit, RangeDate},
+  name: 'post',
+  components: {PostAdd, PostEdit, RangeDate},
   data () {
     return {
       advanced: false,
-      firnitureTypeAdd: {
+      postAdd: {
         visiable: false
       },
-      firnitureTypeEdit: {
+      postEdit: {
         visiable: false
       },
       queryParams: {},
@@ -117,7 +134,8 @@ export default {
         showSizeChanger: true,
         showTotal: (total, range) => `显示 ${range[0]} ~ ${range[1]} 条记录，共 ${total} 条记录`
       },
-      userList: []
+      tagList: [],
+      tagListData: []
     }
   },
   computed: {
@@ -126,38 +144,47 @@ export default {
     }),
     columns () {
       return [{
-        title: '家具类型编号',
-        dataIndex: 'code',
-        ellipsis: true
-      }, {
-        title: '家具类型名称',
-        dataIndex: 'name',
-        ellipsis: true
-      }, {
-        title: '类型图片',
-        dataIndex: 'images',
-        customRender: (text, record, index) => {
-          if (!record.images) return <a-avatar shape="square" icon="user" />
-          return <a-popover>
-            <template slot="content">
-              <a-avatar shape="square" size={132} icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.images.split(',')[0] } />
-            </template>
-            <a-avatar shape="square" icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.images.split(',')[0] } />
-          </a-popover>
-        }
-      }, {
-        title: '备注',
-        dataIndex: 'remark',
+        title: '发布人',
+        dataIndex: 'userName',
         customRender: (text, row, index) => {
           if (text !== null) {
             return text
           } else {
             return '- -'
           }
-        },
-        ellipsis: true
+        }
       }, {
-        title: '创建时间',
+        title: '头像',
+        dataIndex: 'userImages',
+        customRender: (text, record, index) => {
+          if (!record.userImages) return <a-avatar shape="square" icon="user" />
+          return <a-popover>
+            <template slot="content">
+              <a-avatar shape="square" size={132} icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.userImages } />
+            </template>
+            <a-avatar shape="square" icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.userImages } />
+          </a-popover>
+        }
+      }, {
+        title: '标题',
+        dataIndex: 'title',
+        scopedSlots: { customRender: 'titleShow' }
+      }, {
+        title: '贴子内容',
+        dataIndex: 'content',
+        scopedSlots: { customRender: 'contentShow' }
+      }, {
+        title: '所属模块',
+        dataIndex: 'tagName',
+        customRender: (text, row, index) => {
+          if (text !== null) {
+            return text
+          } else {
+            return '- -'
+          }
+        }
+      }, {
+        title: '发布时间',
         dataIndex: 'createDate',
         customRender: (text, row, index) => {
           if (text !== null) {
@@ -165,8 +192,7 @@ export default {
           } else {
             return '- -'
           }
-        },
-        ellipsis: true
+        }
       }, {
         title: '操作',
         dataIndex: 'operation',
@@ -176,8 +202,26 @@ export default {
   },
   mounted () {
     this.fetch()
+    this.getTagList()
   },
   methods: {
+    auditDelete (row) {
+      row.deleteFlag = 0
+      this.$put('/cos/post-info', row).then((r) => {
+        this.$message.success('恢复贴子成功！')
+        this.search()
+      })
+    },
+    getTagList () {
+      this.$get('/cos/tag-info/list').then((r) => {
+        this.tagList = r.data.data
+        let tagListData = []
+        r.data.data.forEach(item => {
+          tagListData.push({label: item.name, value: item.id})
+        })
+        this.tagListData = tagListData
+      })
+    },
     onSelectChange (selectedRowKeys) {
       this.selectedRowKeys = selectedRowKeys
     },
@@ -185,26 +229,26 @@ export default {
       this.advanced = !this.advanced
     },
     add () {
-      this.firnitureTypeAdd.visiable = true
+      this.postAdd.visiable = true
     },
-    handlefirnitureTypeAddClose () {
-      this.firnitureTypeAdd.visiable = false
+    handlepostAddClose () {
+      this.postAdd.visiable = false
     },
-    handlefirnitureTypeAddSuccess () {
-      this.firnitureTypeAdd.visiable = false
-      this.$message.success('新增家具类型成功')
+    handlepostAddSuccess () {
+      this.postAdd.visiable = false
+      this.$message.success('新增贴子成功')
       this.search()
     },
     edit (record) {
-      this.$refs.firnitureTypeEdit.setFormValues(record)
-      this.firnitureTypeEdit.visiable = true
+      this.$refs.postEdit.setFormValues(record)
+      this.postEdit.visiable = true
     },
-    handlefirnitureTypeEditClose () {
-      this.firnitureTypeEdit.visiable = false
+    handlepostEditClose () {
+      this.postEdit.visiable = false
     },
-    handlefirnitureTypeEditSuccess () {
-      this.firnitureTypeEdit.visiable = false
-      this.$message.success('修改家具类型成功')
+    handlepostEditSuccess () {
+      this.postEdit.visiable = false
+      this.$message.success('修改贴子成功')
       this.search()
     },
     handleDeptChange (value) {
@@ -222,7 +266,7 @@ export default {
         centered: true,
         onOk () {
           let ids = that.selectedRowKeys.join(',')
-          that.$delete('/cos/firniture-type-info/' + ids).then(() => {
+          that.$delete('/cos/post-info/' + ids).then(() => {
             that.$message.success('删除成功')
             that.selectedRowKeys = []
             that.search()
@@ -292,10 +336,10 @@ export default {
         params.size = this.pagination.defaultPageSize
         params.current = this.pagination.defaultCurrent
       }
-      if (params.status === undefined) {
-        delete params.status
+      if (params.tagId === undefined) {
+        delete params.tagId
       }
-      this.$get('/cos/firniture-type-info/page', {
+      this.$get('/cos/post-info/page', {
         ...params
       }).then((r) => {
         let data = r.data.data

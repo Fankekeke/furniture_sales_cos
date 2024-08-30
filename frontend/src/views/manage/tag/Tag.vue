@@ -7,26 +7,21 @@
           <div :class="advanced ? null: 'fold'">
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="类型名称"
-                :labelCol="{span: 5}"
-                :wrapperCol="{span: 18, offset: 1}">
+                label="模块名称"
+                :labelCol="{span: 4}"
+                :wrapperCol="{span: 18, offset: 2}">
                 <a-input v-model="queryParams.name"/>
               </a-form-item>
             </a-col>
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="类型编号"
-                :labelCol="{span: 5}"
-                :wrapperCol="{span: 18, offset: 1}">
-                <a-input v-model="queryParams.code"/>
-              </a-form-item>
-            </a-col>
-            <a-col :md="6" :sm="24">
-              <a-form-item
-                label="备注"
-                :labelCol="{span: 5}"
-                :wrapperCol="{span: 18, offset: 1}">
-                <a-input v-model="queryParams.remark"/>
+                label="模块状态"
+                :labelCol="{span: 4}"
+                :wrapperCol="{span: 18, offset: 2}">
+                <a-select v-model="queryParams.deleteFlag" allowClear>
+                  <a-select-option value="0">使用中</a-select-option>
+                  <a-select-option value="1">已删除</a-select-option>
+                </a-select>
               </a-form-item>
             </a-col>
           </div>
@@ -62,44 +57,54 @@
             </a-tooltip>
           </template>
         </template>
+        <template slot="contentShow" slot-scope="text, record">
+          <template>
+            <a-tooltip>
+              <template slot="title">
+                {{ record.content }}
+              </template>
+              {{ record.content.slice(0, 30) }} ...
+            </a-tooltip>
+          </template>
+        </template>
         <template slot="operation" slot-scope="text, record">
-          <a-icon type="setting" theme="twoTone" twoToneColor="#4a9ff5" @click="edit(record)" title="修 改" style="margin-left: 15px"></a-icon>
+          <a-icon type="setting" theme="twoTone" twoToneColor="#4a9ff5" @click="edit(record)" title="修 改"></a-icon>
         </template>
       </a-table>
     </div>
-    <firnitureType-add
-      v-if="firnitureTypeAdd.visiable"
-      @close="handlefirnitureTypeAddClose"
-      @success="handlefirnitureTypeAddSuccess"
-      :firnitureTypeAddVisiable="firnitureTypeAdd.visiable">
-    </firnitureType-add>
-    <firnitureType-edit
-      ref="firnitureTypeEdit"
-      @close="handlefirnitureTypeEditClose"
-      @success="handlefirnitureTypeEditSuccess"
-      :firnitureTypeEditVisiable="firnitureTypeEdit.visiable">
-    </firnitureType-edit>
+    <tag-add
+      v-if="tagAdd.visiable"
+      @close="handletagAddClose"
+      @success="handletagAddSuccess"
+      :tagAddVisiable="tagAdd.visiable">
+    </tag-add>
+    <tag-edit
+      ref="tagEdit"
+      @close="handletagEditClose"
+      @success="handletagEditSuccess"
+      :tagEditVisiable="tagEdit.visiable">
+    </tag-edit>
   </a-card>
 </template>
 
 <script>
 import RangeDate from '@/components/datetime/RangeDate'
-import firnitureTypeAdd from './FirnitureTypeAdd.vue'
-import firnitureTypeEdit from './FirnitureTypeEdit.vue'
+import TagAdd from './TagAdd'
+import TagEdit from './TagEdit'
 import {mapState} from 'vuex'
 import moment from 'moment'
 moment.locale('zh-cn')
 
 export default {
-  name: 'firnitureType',
-  components: {firnitureTypeAdd, firnitureTypeEdit, RangeDate},
+  name: 'tag',
+  components: {TagAdd, TagEdit, RangeDate},
   data () {
     return {
       advanced: false,
-      firnitureTypeAdd: {
+      tagAdd: {
         visiable: false
       },
-      firnitureTypeEdit: {
+      tagEdit: {
         visiable: false
       },
       queryParams: {},
@@ -126,36 +131,11 @@ export default {
     }),
     columns () {
       return [{
-        title: '家具类型编号',
-        dataIndex: 'code',
-        ellipsis: true
+        title: '模块ID',
+        dataIndex: 'id'
       }, {
-        title: '家具类型名称',
-        dataIndex: 'name',
-        ellipsis: true
-      }, {
-        title: '类型图片',
-        dataIndex: 'images',
-        customRender: (text, record, index) => {
-          if (!record.images) return <a-avatar shape="square" icon="user" />
-          return <a-popover>
-            <template slot="content">
-              <a-avatar shape="square" size={132} icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.images.split(',')[0] } />
-            </template>
-            <a-avatar shape="square" icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.images.split(',')[0] } />
-          </a-popover>
-        }
-      }, {
-        title: '备注',
-        dataIndex: 'remark',
-        customRender: (text, row, index) => {
-          if (text !== null) {
-            return text
-          } else {
-            return '- -'
-          }
-        },
-        ellipsis: true
+        title: '模块名称',
+        dataIndex: 'name'
       }, {
         title: '创建时间',
         dataIndex: 'createDate',
@@ -165,8 +145,20 @@ export default {
           } else {
             return '- -'
           }
-        },
-        ellipsis: true
+        }
+      }, {
+        title: '模块状态',
+        dataIndex: 'deleteFlag',
+        customRender: (text, row, index) => {
+          switch (text) {
+            case 0:
+              return <a-tag>使用中</a-tag>
+            case 1:
+              return <a-tag color="red">已删除</a-tag>
+            default:
+              return '- -'
+          }
+        }
       }, {
         title: '操作',
         dataIndex: 'operation',
@@ -185,26 +177,26 @@ export default {
       this.advanced = !this.advanced
     },
     add () {
-      this.firnitureTypeAdd.visiable = true
+      this.tagAdd.visiable = true
     },
-    handlefirnitureTypeAddClose () {
-      this.firnitureTypeAdd.visiable = false
+    handletagAddClose () {
+      this.tagAdd.visiable = false
     },
-    handlefirnitureTypeAddSuccess () {
-      this.firnitureTypeAdd.visiable = false
-      this.$message.success('新增家具类型成功')
+    handletagAddSuccess () {
+      this.tagAdd.visiable = false
+      this.$message.success('新增模块成功')
       this.search()
     },
     edit (record) {
-      this.$refs.firnitureTypeEdit.setFormValues(record)
-      this.firnitureTypeEdit.visiable = true
+      this.$refs.tagEdit.setFormValues(record)
+      this.tagEdit.visiable = true
     },
-    handlefirnitureTypeEditClose () {
-      this.firnitureTypeEdit.visiable = false
+    handletagEditClose () {
+      this.tagEdit.visiable = false
     },
-    handlefirnitureTypeEditSuccess () {
-      this.firnitureTypeEdit.visiable = false
-      this.$message.success('修改家具类型成功')
+    handletagEditSuccess () {
+      this.tagEdit.visiable = false
+      this.$message.success('修改模块成功')
       this.search()
     },
     handleDeptChange (value) {
@@ -222,7 +214,7 @@ export default {
         centered: true,
         onOk () {
           let ids = that.selectedRowKeys.join(',')
-          that.$delete('/cos/firniture-type-info/' + ids).then(() => {
+          that.$delete('/cos/tag-info/' + ids).then(() => {
             that.$message.success('删除成功')
             that.selectedRowKeys = []
             that.search()
@@ -292,10 +284,10 @@ export default {
         params.size = this.pagination.defaultPageSize
         params.current = this.pagination.defaultCurrent
       }
-      if (params.status === undefined) {
-        delete params.status
+      if (params.deleteFlag === undefined) {
+        delete params.deleteFlag
       }
-      this.$get('/cos/firniture-type-info/page', {
+      this.$get('/cos/tag-info/page', {
         ...params
       }).then((r) => {
         let data = r.data.data

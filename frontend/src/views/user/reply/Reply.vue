@@ -7,26 +7,18 @@
           <div :class="advanced ? null: 'fold'">
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="类型名称"
-                :labelCol="{span: 5}"
-                :wrapperCol="{span: 18, offset: 1}">
-                <a-input v-model="queryParams.name"/>
+                label="用户昵称"
+                :labelCol="{span: 4}"
+                :wrapperCol="{span: 18, offset: 2}">
+                <a-input v-model="queryParams.username"/>
               </a-form-item>
             </a-col>
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="类型编号"
-                :labelCol="{span: 5}"
-                :wrapperCol="{span: 18, offset: 1}">
-                <a-input v-model="queryParams.code"/>
-              </a-form-item>
-            </a-col>
-            <a-col :md="6" :sm="24">
-              <a-form-item
-                label="备注"
-                :labelCol="{span: 5}"
-                :wrapperCol="{span: 18, offset: 1}">
-                <a-input v-model="queryParams.remark"/>
+                label="所属贴子"
+                :labelCol="{span: 4}"
+                :wrapperCol="{span: 18, offset: 2}">
+                <a-input v-model="queryParams.title"/>
               </a-form-item>
             </a-col>
           </div>
@@ -39,7 +31,7 @@
     </div>
     <div>
       <div class="operator">
-        <a-button type="primary" ghost @click="add">新增</a-button>
+        <!--        <a-button type="primary" ghost @click="add">新增</a-button>-->
         <a-button @click="batchDelete">删除</a-button>
       </div>
       <!-- 表格区域 -->
@@ -52,6 +44,11 @@
                :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
                :scroll="{ x: 900 }"
                @change="handleTableChange">
+        <template slot="avatarShow" slot-scope="text, record">
+          <template>
+            <img alt="头像" :src="'static/avatar/' + text">
+          </template>
+        </template>
         <template slot="titleShow" slot-scope="text, record">
           <template>
             <a-tooltip>
@@ -62,46 +59,44 @@
             </a-tooltip>
           </template>
         </template>
+        <template slot="contentShow" slot-scope="text, record">
+          <template>
+            <a-tooltip>
+              <template slot="title">
+                {{ record.content }}
+              </template>
+              {{ record.content.slice(0, 30) }} ...
+            </a-tooltip>
+          </template>
+        </template>
         <template slot="operation" slot-scope="text, record">
-          <a-icon type="setting" theme="twoTone" twoToneColor="#4a9ff5" @click="edit(record)" title="修 改" style="margin-left: 15px"></a-icon>
         </template>
       </a-table>
     </div>
-    <firnitureType-add
-      v-if="firnitureTypeAdd.visiable"
-      @close="handlefirnitureTypeAddClose"
-      @success="handlefirnitureTypeAddSuccess"
-      :firnitureTypeAddVisiable="firnitureTypeAdd.visiable">
-    </firnitureType-add>
-    <firnitureType-edit
-      ref="firnitureTypeEdit"
-      @close="handlefirnitureTypeEditClose"
-      @success="handlefirnitureTypeEditSuccess"
-      :firnitureTypeEditVisiable="firnitureTypeEdit.visiable">
-    </firnitureType-edit>
+    <user-view
+      @close="handleUserViewClose"
+      :userShow="userView.visiable"
+      :userData="userView.data">
+    </user-view>
   </a-card>
 </template>
 
 <script>
 import RangeDate from '@/components/datetime/RangeDate'
-import firnitureTypeAdd from './FirnitureTypeAdd.vue'
-import firnitureTypeEdit from './FirnitureTypeEdit.vue'
 import {mapState} from 'vuex'
 import moment from 'moment'
 moment.locale('zh-cn')
 
 export default {
-  name: 'firnitureType',
-  components: {firnitureTypeAdd, firnitureTypeEdit, RangeDate},
+  name: 'User',
+  components: {RangeDate},
   data () {
     return {
+      userView: {
+        visiable: false,
+        data: null
+      },
       advanced: false,
-      firnitureTypeAdd: {
-        visiable: false
-      },
-      firnitureTypeEdit: {
-        visiable: false
-      },
       queryParams: {},
       filteredInfo: null,
       sortedInfo: null,
@@ -126,51 +121,31 @@ export default {
     }),
     columns () {
       return [{
-        title: '家具类型编号',
-        dataIndex: 'code',
-        ellipsis: true
+        title: '用户昵称',
+        dataIndex: 'userName'
       }, {
-        title: '家具类型名称',
-        dataIndex: 'name',
-        ellipsis: true
-      }, {
-        title: '类型图片',
-        dataIndex: 'images',
+        title: '头像',
+        dataIndex: 'userImages',
         customRender: (text, record, index) => {
-          if (!record.images) return <a-avatar shape="square" icon="user" />
+          if (!record.userImages) return <a-avatar shape="square" icon="user" />
           return <a-popover>
             <template slot="content">
-              <a-avatar shape="square" size={132} icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.images.split(',')[0] } />
+              <a-avatar shape="square" size={132} icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.userImages } />
             </template>
-            <a-avatar shape="square" icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.images.split(',')[0] } />
+            <a-avatar shape="square" icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.userImages } />
           </a-popover>
         }
       }, {
-        title: '备注',
-        dataIndex: 'remark',
-        customRender: (text, row, index) => {
-          if (text !== null) {
-            return text
-          } else {
-            return '- -'
-          }
-        },
-        ellipsis: true
+        title: '所属贴子',
+        dataIndex: 'title',
+        scopedSlots: {customRender: 'titleShow'}
       }, {
-        title: '创建时间',
-        dataIndex: 'createDate',
-        customRender: (text, row, index) => {
-          if (text !== null) {
-            return text
-          } else {
-            return '- -'
-          }
-        },
-        ellipsis: true
+        title: '消息内容',
+        dataIndex: 'content',
+        scopedSlots: {customRender: 'contentShow'}
       }, {
-        title: '操作',
-        dataIndex: 'operation',
-        scopedSlots: {customRender: 'operation'}
+        title: '发送时间',
+        dataIndex: 'sendCreate'
       }]
     }
   },
@@ -178,34 +153,18 @@ export default {
     this.fetch()
   },
   methods: {
+    view (row) {
+      this.userView.data = row
+      this.userView.visiable = true
+    },
+    handleUserViewClose () {
+      this.userView.visiable = false
+    },
     onSelectChange (selectedRowKeys) {
       this.selectedRowKeys = selectedRowKeys
     },
     toggleAdvanced () {
       this.advanced = !this.advanced
-    },
-    add () {
-      this.firnitureTypeAdd.visiable = true
-    },
-    handlefirnitureTypeAddClose () {
-      this.firnitureTypeAdd.visiable = false
-    },
-    handlefirnitureTypeAddSuccess () {
-      this.firnitureTypeAdd.visiable = false
-      this.$message.success('新增家具类型成功')
-      this.search()
-    },
-    edit (record) {
-      this.$refs.firnitureTypeEdit.setFormValues(record)
-      this.firnitureTypeEdit.visiable = true
-    },
-    handlefirnitureTypeEditClose () {
-      this.firnitureTypeEdit.visiable = false
-    },
-    handlefirnitureTypeEditSuccess () {
-      this.firnitureTypeEdit.visiable = false
-      this.$message.success('修改家具类型成功')
-      this.search()
     },
     handleDeptChange (value) {
       this.queryParams.deptId = value || ''
@@ -222,7 +181,7 @@ export default {
         centered: true,
         onOk () {
           let ids = that.selectedRowKeys.join(',')
-          that.$delete('/cos/firniture-type-info/' + ids).then(() => {
+          that.$delete('/cos/reply-info/' + ids).then(() => {
             that.$message.success('删除成功')
             that.selectedRowKeys = []
             that.search()
@@ -292,10 +251,8 @@ export default {
         params.size = this.pagination.defaultPageSize
         params.current = this.pagination.defaultCurrent
       }
-      if (params.status === undefined) {
-        delete params.status
-      }
-      this.$get('/cos/firniture-type-info/page', {
+      params.studentId = this.currentUser.userId
+      this.$get('/cos/reply-info/page', {
         ...params
       }).then((r) => {
         let data = r.data.data
