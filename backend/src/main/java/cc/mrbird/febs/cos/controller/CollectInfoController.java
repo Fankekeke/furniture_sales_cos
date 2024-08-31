@@ -44,6 +44,23 @@ public class CollectInfoController {
     /**
      * 根据用户ID获取收藏商品信息
      *
+     * @param userId     用户ID
+     * @param merchantId 商家ID
+     * @return 结果
+     */
+    @GetMapping("/selectCollectByUser")
+    public R selectCollectByUser(Integer userId, Integer merchantId) {
+        // 获取用户信息
+        UserInfo userInfo = userInfoService.getOne(Wrappers.<UserInfo>lambdaQuery().eq(UserInfo::getUserId, userId));
+        if (null == userInfo) {
+            return R.ok(Collections.emptyList());
+        }
+        return R.ok(collectInfoService.list(Wrappers.<CollectInfo>lambdaQuery().eq(CollectInfo::getUserId, userInfo.getId()).eq(CollectInfo::getMerchantId, merchantId)));
+    }
+
+    /**
+     * 根据用户ID获取收藏商品信息
+     *
      * @param userId 用户ID
      * @return 结果
      */

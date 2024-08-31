@@ -14,7 +14,7 @@
         <a-col :span="15" style="height: 100%;">
           <div style="width: 100%;height: 100%;box-shadow: 3px 3px 3px rgba(0, 0, 0, .2);color:#fff">
             <a-row :gutter="20" style="padding: 50px">
-              <a-col :span="8" v-for="(item, index) in dishesList" :key="index" style="margin-bottom: 15px">
+              <a-col :span="12" v-for="(item, index) in dishesList" :key="index" style="margin-bottom: 15px">
                 <div style="width: 100%;margin-bottom: 15px;text-align: left;box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;">
                   <a-card :bordered="false" hoverable>
                     <a-carousel autoplay style="height: 150px;" v-if="item.images !== undefined && item.images !== ''">
@@ -22,17 +22,21 @@
                         <img :src="'http://127.0.0.1:9527/imagesWeb/'+item" style="width: 100%;height: 250px">
                       </div>
                     </a-carousel>
-                    <a-card-meta :title="item.name" :description="item.content.slice(0, 15)+'...'" style="margin-top: 10px"></a-card-meta>
+                    <a-card-meta :title="item.name" :description="item.content.slice(0, 25)+'...'" style="margin-top: 10px"></a-card-meta>
                     <div style="font-size: 12px;font-family: SimHei;margin-top: 8px;margin-bottom: 5px">
                       <a-row>
                         <a-col :span="18">
                           <div>
-                            <span>{{ item.rawMaterial.slice(0, 5)+'...' }}</span> |
-                            <span  style="margin-left: 2px">{{ item.portion.slice(0, 10)+'...' }}</span>
+                            <span>{{ item.rawMaterial.slice(0, 10)+'...' }}</span> |
+                            <span  style="margin-left: 2px">{{ item.portion.slice(0, 15)+'...' }}</span>
                           </div>
                           <div style="color: #f5222d; font-size: 13px;float: left;margin-top: 5px">{{ item.unitPrice }}元</div>
                         </a-col>
-                        <a-col :span="6" style="height: 100%;text-align: right">
+                        <a-col :span="3" style="height: 100%;text-align: right">
+                          <a-icon type="heart" v-if="checkCollect(item.id)" style="font-size: 20px;margin-right: 5px;margin-top: 10px;cursor: pointer;color: red" @click="collectDel(item)"/>
+                          <a-icon type="heart" v-else style="font-size: 20px;margin-right: 5px;margin-top: 10px;cursor: pointer;" @click="collectAdd(item)"/>
+                        </a-col>
+                        <a-col :span="3" style="height: 100%;text-align: right">
                           <a-icon type="plus-square" theme="twoTone" style="font-size: 20px;margin-right: 5px;margin-top: 10px;cursor: pointer;" @click="dishesAdd(item)" v-show="nextFlag == 1"/>
                         </a-col>
                       </a-row>
@@ -309,6 +313,7 @@ export default {
       community: null,
       nowPoint: null,
       roadData: [],
+      collectList: [],
       checkLoading: false,
       echartsShow: false,
       getShop: null,
@@ -334,6 +339,7 @@ export default {
   watch: {
     'orderShow': function (value) {
       if (value) {
+        this.collectList = []
         this.checkList = []
         this.addressId = null
         this.addressList = []
@@ -343,6 +349,7 @@ export default {
         this.totalHeat = 0
         this.selectDishesByMerchant(this.orderData.id)
         this.selectMerchantEvaluate(this.orderData.id)
+        this.selectCollectByUser(this.orderData.id)
         this.selectAddress()
       }
     },
@@ -356,6 +363,29 @@ export default {
     }
   },
   methods: {
+    collectAdd (row) {
+      this.$post(`/cos/collect-info`, {userId: this.currentUser.userId, furnitureId: row.id, merchantId: this.orderData.id}).then((r) => {
+        this.$message.success('收藏成功')
+        this.selectCollectByUser(this.orderData.id)
+      })
+    },
+    collectDel (row) {
+      this.$delete('/cos/collect-info/' + row.id).then(() => {
+        this.$message.success('取消收藏成功')
+        this.selectCollectByUser(this.orderData.id)
+      })
+    },
+    checkCollect (furnitureId) {
+      if (this.collectList.length === 0) {
+        return false
+      }
+      return this.collectList.some(item => item.furnitureId === furnitureId)
+    },
+    selectCollectByUser (merchantId) {
+      this.$get(`/cos/collect-info/selectCollectByUser`, {userId: this.currentUser.userId, merchantId}).then((r) => {
+        this.collectList = r.data.data
+      })
+    },
     showChildrenDrawer () {
       this.childrenDrawer = true
     },

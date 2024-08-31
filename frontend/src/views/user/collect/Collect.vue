@@ -287,7 +287,7 @@ export default {
         params.size = this.pagination.defaultPageSize
         params.current = this.pagination.defaultCurrent
       }
-      params.userId
+      params.userId = this.currentUser.userId
       this.$get('/cos/collect-info/page', {
         ...params
       }).then((r) => {
