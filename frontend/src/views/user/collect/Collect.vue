@@ -7,14 +7,6 @@
           <div :class="advanced ? null: 'fold'">
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="用户昵称"
-                :labelCol="{span: 4}"
-                :wrapperCol="{span: 18, offset: 2}">
-                <a-input v-model="queryParams.userName"/>
-              </a-form-item>
-            </a-col>
-            <a-col :md="6" :sm="24">
-              <a-form-item
                 label="家具类型"
                 :labelCol="{span: 4}"
                 :wrapperCol="{span: 18, offset: 2}">
@@ -295,6 +287,7 @@ export default {
         params.size = this.pagination.defaultPageSize
         params.current = this.pagination.defaultCurrent
       }
+      params.userId
       this.$get('/cos/collect-info/page', {
         ...params
       }).then((r) => {

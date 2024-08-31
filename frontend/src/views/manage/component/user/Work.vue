@@ -1,7 +1,7 @@
 <template>
   <div style="background:#ECECEC; padding:30px;margin-top: 30px;margin-bottom: 30px">
     <div style="height: 450px;">
-      <div style="height: 350px;background-image: url(../static/img/house.jpg);padding: 50px">
+      <div style="height: 350px;background: url(../static/img/interior-3530343_1920.jpg) no-repeat center;padding: 50px">
         <div style="font-size: 35px;font-weight: 500;color: white;font-family: SimHei">欢迎来到居然之家~</div>
         <div style="font-size: 22px;font-weight: 500;color: white;font-family: SimHei">开始选购</div>
         <div style="height: 180px;margin-top: 100px">

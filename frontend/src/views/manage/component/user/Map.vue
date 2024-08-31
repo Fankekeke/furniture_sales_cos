@@ -27,8 +27,8 @@
                       <a-row>
                         <a-col :span="18">
                           <div>
-                            <span>{{ item.rawMaterial }}</span> |
-                            <span  style="margin-left: 2px">{{ item.portion }}</span>
+                            <span>{{ item.rawMaterial.slice(0, 5)+'...' }}</span> |
+                            <span  style="margin-left: 2px">{{ item.portion.slice(0, 10)+'...' }}</span>
                           </div>
                           <div style="color: #f5222d; font-size: 13px;float: left;margin-top: 5px">{{ item.unitPrice }}元</div>
                         </a-col>

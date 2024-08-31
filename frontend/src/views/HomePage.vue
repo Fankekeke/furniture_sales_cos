@@ -1,7 +1,7 @@
 <template>
   <div :class="[multipage === true ? 'multi-page':'single-page', 'not-menu-page', 'home-page']">
     <a-row :gutter="8" class="head-info">
-      <a-card class="head-info-card">
+      <a-card class="head-info-card" hoverable>
         <a-col :span="12">
 <!--          <div class="head-info-avatar">-->
 <!--            <img alt="头像" :src="avatar">-->
