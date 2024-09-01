@@ -521,7 +521,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
                     MerchantInfo merchantInfo = merchantInfoService.getById(orderInfo.getMerchantId());
                     Context context = new Context();
                     context.setVariable("today", DateUtil.formatDate(new Date()));
-                    context.setVariable("custom", userInfo.getName() + "，您好，在 " + merchantInfo.getName() + " 您已消费 " + memberInfo.getIntegral() + "元。获得此店会员资格（所有餐品消费八折）");
+                    context.setVariable("custom", userInfo.getName() + "，您好，在 " + merchantInfo.getName() + " 您已消费 " + memberInfo.getIntegral() + "元。获得此店会员资格（所有商品消费八折）");
                     String emailContent = templateEngine.process("registerEmail", context);
                     mailService.sendHtmlMail(userInfo.getMail(), DateUtil.formatDate(new Date()) + "会员通知", emailContent);
                 }
