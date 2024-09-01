@@ -109,7 +109,7 @@
                   <div v-if="checkList.length !== 0" style="font-size: 12px;font-family: SimHei">
                     <a-table :columns="columns1" :rowKey="record => record.id" :data-source="checkList" :pagination="false">
                     </a-table>
-                    <a-alert :message="'购买家具热量【'+totalHeat+'】 超过600，请合理规划饮食' " banner v-if="totalHeat > 600"/>
+<!--                    <a-alert :message="'购买家具热量【'+totalHeat+'】 超过600，请合理规划' " banner v-if="totalHeat > 600"/>-->
                     <a-row style="padding-left: 20px;padding-right: 20px;margin-top: 30px">
                       <a-col style="margin-bottom: 15px"><span style="font-size: 13px;font-weight: 650;color: #000c17">选择 配送/店内购买</span></a-col>
                       <a-col :span="24">
@@ -370,7 +370,7 @@ export default {
       })
     },
     collectDel (row) {
-      this.$delete('/cos/collect-info/' + row.id).then(() => {
+      this.$delete('/cos/collect-info/deleteById', {userId: this.currentUser.userId, furnitureId: row.id, merchantId: this.orderData.id}).then(() => {
         this.$message.success('取消收藏成功')
         this.selectCollectByUser(this.orderData.id)
       })

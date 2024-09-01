@@ -128,4 +128,20 @@ public class CollectInfoController {
     public R deleteByIds(@PathVariable("ids") List<Integer> ids) {
         return R.ok(collectInfoService.removeByIds(ids));
     }
+
+    /**
+     * 删除商品收藏信息
+     *
+     * @return 商品收藏信息
+     */
+    @DeleteMapping("/deleteById")
+    public R deleteById(Integer userId, Integer furnitureId, Integer merchantId) {
+        // 获取用户信息
+        UserInfo userInfo = userInfoService.getOne(Wrappers.<UserInfo>lambdaQuery().eq(UserInfo::getUserId, userId));
+        if (userInfo == null) {
+            return R.ok(false);
+        }
+
+        return R.ok(collectInfoService.remove(Wrappers.<CollectInfo>lambdaQuery().eq(CollectInfo::getUserId, userInfo.getId()).eq(CollectInfo::getFurnitureId, furnitureId).eq(CollectInfo::getMerchantId, merchantId)));
+    }
 }

@@ -10,7 +10,7 @@
               <a-col :span="16">
                 <a-row>
                   <a-col :span="18">
-                    <a-input v-model="key" placeholder="开始点餐"/>
+                    <a-input v-model="key" placeholder="搜索商家"/>
                   </a-col>
                   <a-col :span="4" :offset="2">
                     <a-button type="primary" @click="fetch">
@@ -41,7 +41,7 @@
                 <div>
                   <a-badge status="success" v-if="item.currentStatus === '1'" style="display: contents;margin: 0 auto"/>
                   <a-badge status="error" v-if="item.currentStatus === '0'" style="display: contents;margin: 0 auto"/>
-                  {{ item.name }}  <a-tag color="green" style="font-size: 11px">{{ item.dishes }}</a-tag>
+                  {{ item.name }}  <a-tag color="green" style="font-size: 11px">{{ item.phone }}</a-tag>
                 </div>
                 <div style="font-size: 12px;margin-top: 4px">
                   <a-icon type="environment" />  {{ item.address }}
