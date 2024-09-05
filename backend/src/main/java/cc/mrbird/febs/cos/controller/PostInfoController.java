@@ -90,7 +90,7 @@ public class PostInfoController {
      */
     @PostMapping
     public R save(PostInfo postInfo) {
-        // 获取学生信息
+        // 获取用户信息
         UserInfo userInfo = userInfoService.getOne(Wrappers.<UserInfo>lambdaQuery().eq(UserInfo::getUserId, postInfo.getUserId()));
         if (userInfo != null) {
             postInfo.setUserId(Long.valueOf(userInfo.getId()));
