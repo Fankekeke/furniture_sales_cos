@@ -3,9 +3,12 @@ package cc.mrbird.febs.cos.controller;
 
 import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.utils.R;
+import cc.mrbird.febs.cos.entity.CustomOrderInfo;
 import cc.mrbird.febs.cos.entity.OrderInfo;
+import cc.mrbird.febs.cos.service.ICustomOrderInfoService;
 import cc.mrbird.febs.cos.service.IOrderInfoService;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +27,8 @@ import java.util.List;
 public class OrderInfoController {
 
     private final IOrderInfoService orderInfoService;
+
+    private final ICustomOrderInfoService customerInfoService;
 
     /**
      * 分页获取订单信息
@@ -155,7 +160,11 @@ public class OrderInfoController {
      */
     @PostMapping("/orderPay")
     public R orderPay(@RequestParam("orderCode") String orderCode) {
-        return R.ok(orderInfoService.orderPay(orderCode));
+        if (StrUtil.contains(orderCode, "CUS-")) {
+            return R.ok(customerInfoService.update(Wrappers.<CustomOrderInfo>lambdaUpdate().set(CustomOrderInfo::getStatus, 3).eq(CustomOrderInfo::getCode, orderCode)));
+        } else {
+            return R.ok(orderInfoService.orderPay(orderCode));
+        }
     }
 
     /**

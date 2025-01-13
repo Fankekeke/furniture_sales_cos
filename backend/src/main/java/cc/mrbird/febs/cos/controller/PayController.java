@@ -45,6 +45,22 @@ public class PayController {
     }
 
     /**
+     * 新增订单信息
+     *
+     * @return 结果
+     */
+    @PostMapping("/alipay/custom")
+    public R saveOrderCustom(String outTradeNo, String subject, String totalAmount, String body) throws AlipayApiException {
+        AlipayBean alipayBean = new AlipayBean();
+        alipayBean.setOut_trade_no(outTradeNo);
+        alipayBean.setSubject(subject);
+        alipayBean.setTotal_amount(totalAmount);
+        alipayBean.setBody(body);
+        String result = payService.aliPay(alipayBean);
+        return R.ok(result);
+    }
+
+    /**
      * 阿里支付
      * @param subject
      * @param body

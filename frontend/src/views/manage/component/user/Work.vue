@@ -50,6 +50,7 @@
             </div>
             <template slot="actions" class="ant-card-actions">
               <a-icon key="shopping" type="shopping" @click="view(item)"/>
+              <a-icon key="control" type="control" @click="customAdd(item)"/>
             </template>
           </a-card>
         </div>
@@ -59,6 +60,13 @@
          @close="handleorderMapViewClose"
          :orderShow="orderMapView.visiable">
     </Map>
+    <bulletin-add
+      v-if="bulletinAdd.visiable"
+      @close="handleBulletinAddClose"
+      @success="handleBulletinAddSuccess"
+      :bulletinData="bulletinAdd.data"
+      :bulletinAddVisiable="bulletinAdd.visiable">
+    </bulletin-add>
   </div>
 </template>
 
@@ -66,12 +74,17 @@
 
 import {mapState} from 'vuex'
 import VehicleView from './VehicleView.vue'
+import BulletinAdd from './CustomAdd.vue'
 import Map from './Map.vue'
 export default {
   name: 'Work',
-  components: {Map, VehicleView},
+  components: {Map, VehicleView, BulletinAdd},
   data () {
     return {
+      bulletinAdd: {
+        visiable: false,
+        data: null
+      },
       orderMapView: {
         merchantInfo: null,
         visiable: false
@@ -101,6 +114,17 @@ export default {
     this.getWorkStatusList()
   },
   methods: {
+    handleBulletinAddClose () {
+      this.bulletinAdd.visiable = false
+    },
+    handleBulletinAddSuccess () {
+      this.bulletinAdd.visiable = false
+      this.$message.success('新增定制家具成功')
+    },
+    customAdd (row) {
+      this.bulletinAdd.data = row
+      this.bulletinAdd.visiable = true
+    },
     handlevehicleViewClose () {
       this.vehicleView.visiable = false
     },
