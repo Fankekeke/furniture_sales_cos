@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.cos.dao.CustomOrderInfoMapper">
+
+    <!-- 分页获取家具定制信息 -->
+    <select id="queryCustomPage" resultType="java.util.LinkedHashMap">
+        select
+        coi.id,
+        coi.code,
+        coi.merchant_id,
+        coi.user_id,
+        coi.content,
+        coi.images,
+        coi.create_date,
+        coi.status,
+        coi.order_price,
+        coi.remark,
+        ui.name as userName,
+        ui.images as userImages,
+        mi.name as merchantName,
+        mi.images as merchantImages
+        from
+        custom_order_info coi
+        left join merchant_info mi on
+        (mi.id = coi.merchant_id)
+        left join user_info ui on
+        (ui.id = coi.user_id)
+        where
+        1 = 1
+        <if test="customOrderInfo.code != null and customOrderInfo.code != ''">
+            AND coi.code LIKE CONCAT('%',#{customOrderInfo.code},'%')
+        </if>
+        <if test="customOrderInfo.userName != null and customOrderInfo.userName != ''">
+            AND ui.name LIKE CONCAT('%',#{customOrderInfo.userName},'%')
+        </if>
+        <if test="customOrderInfo.merchantName != null and customOrderInfo.merchantName != ''">
+            AND mi.name LIKE CONCAT('%',#{customOrderInfo.merchantName},'%')
+        </if>
+        <if test="customOrderInfo.userId != null">
+            AND ui.user_id = #{customOrderInfo.userId}
+        </if>
+        order by
+        coi.create_date desc
+    </select>
+</mapper>

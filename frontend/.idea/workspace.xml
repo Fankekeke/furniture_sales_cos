@@ -23,19 +23,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b51975f-5e37-45a1-bd9d-0f3c12f944d0" name="Default Changelist" comment="fix -地图展示">
-      <change afterPath="$PROJECT_DIR$/src/views/manage/component/user/CustomAdd.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/manage/custom/Custom.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/manage/custom/CustomAdd.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/manage/custom/CustomEdit.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/merchant/custom/Custom.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/merchant/custom/CustomAdd.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/merchant/custom/CustomEdit.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/user/custom/Custom.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/user/custom/CustomAdd.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/user/custom/CustomEdit.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/cc/mrbird/febs/common/generator/CodeGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/cc/mrbird/febs/common/generator/CodeGenerator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/views/manage/component/DishesView.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manage/component/user/Work.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/component/user/Work.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/manage/component/user/Map.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/component/user/Map.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,22 +54,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "G:/Project/20240725家居销售系统/furniture_sales_cos/frontend/src/views/manage/component/user",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "yarn",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "ts.external.directory.path": "D:\\办公软件\\WebStorm 2022.3.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;G:/Project/20240725家居销售系统/furniture_sales_cos/frontend/src/views/manage/component/user&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\办公软件\\WebStorm 2022.3.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="G:\Project\20240725家居销售系统\furniture_sales_cos\frontend\src\views\manage\component\user" />

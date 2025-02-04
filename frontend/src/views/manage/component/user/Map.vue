@@ -16,7 +16,7 @@
             <a-row :gutter="20" style="padding: 50px">
               <a-col :span="12" v-for="(item, index) in dishesList" :key="index" style="margin-bottom: 15px">
                 <div style="width: 100%;margin-bottom: 15px;text-align: left;box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;">
-                  <a-card :bordered="false" hoverable>
+                  <a-card :bordered="false" hoverable @click="dishesViewOpen(item)">
                     <a-carousel autoplay style="height: 150px;" v-if="item.images !== undefined && item.images !== ''">
                       <div style="width: 100%;height: 150px" v-for="(item, index) in item.images.split(',')" :key="index">
                         <img :src="'http://127.0.0.1:9527/imagesWeb/'+item" style="width: 100%;height: 250px">
@@ -186,14 +186,21 @@
         <a-button @click="orderPay" type="primary" v-if="nextFlag == 2">支付</a-button>
       </div>
     </div>
+    <dishes-view
+      @close="handledishesViewClose"
+      :dishesShow="dishesView.visiable"
+      :dishesData="dishesView.data">
+    </dishes-view>
   </a-drawer>
 </template>
 
 <script>
 import baiduMap from '@/utils/map/baiduMap'
 import {mapState} from 'vuex'
+import dishesView from '..//DishesView.vue'
 export default {
   name: 'Map',
+  components: {dishesView},
   props: {
     orderShow: {
       type: Boolean,
@@ -285,6 +292,10 @@ export default {
   },
   data () {
     return {
+      dishesView: {
+        visiable: false,
+        data: null
+      },
       childrenDrawer: false,
       orderAddInfo: null,
       addressId: null,
@@ -363,6 +374,13 @@ export default {
     }
   },
   methods: {
+    dishesViewOpen (row) {
+      this.dishesView.data = row
+      this.dishesView.visiable = true
+    },
+    handledishesViewClose () {
+      this.dishesView.visiable = false
+    },
     collectAdd (row) {
       this.$post(`/cos/collect-info`, {userId: this.currentUser.userId, furnitureId: row.id, merchantId: this.orderData.id}).then((r) => {
         this.$message.success('收藏成功')
