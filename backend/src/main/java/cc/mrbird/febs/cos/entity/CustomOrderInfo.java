@@ -77,7 +77,7 @@ public class CustomOrderInfo implements Serializable {
     /**
      * 配送员
      */
-    private String staffId;
+    private Integer staffId;
 
     @TableField(exist = false)
     private String userName;

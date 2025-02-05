@@ -13,8 +13,9 @@
       <a-row style="height:100vh;font-family: SimHei">
         <a-col :span="15" style="height: 100%;">
           <div style="width: 100%;height: 100%;box-shadow: 3px 3px 3px rgba(0, 0, 0, .2);color:#fff">
-            <div>
+            <div style="text-align: center;margin-top: 20px">
               <a-radio-group v-model="typeId" @change="onChange">
+                <a-radio-button value="-1">全部</a-radio-button>
                 <a-radio-button :key="index" :value="item.id" v-for="(item, index) in typeList">
                   {{ item.name }}
                 </a-radio-button>
@@ -386,11 +387,14 @@ export default {
     }
   },
   methods: {
-    onChange(e) {
+    onChange (e) {
+      if (e.target.value == -1) {
+        this.dishesList = this.dishesBackList
+        return false
+      }
       if (e.target.value && this.dishesBackList) {
-        let dishesList = this.dishesBackList.filter(item => {
-          return item.typeId = e.target.value
-        })
+        console.log(this.dishesBackList)
+        let dishesList = this.dishesBackList.filter(item => item.typeId == e.target.value)
         this.dishesList = dishesList
       }
     },

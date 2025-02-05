@@ -124,10 +124,13 @@ export default {
       previewImage: ''
     }
   },
+  mounted () {
+    this.selectStaffList()
+  },
   methods: {
     selectStaffList () {
       this.$get(`/cos/staff-info/selectStaffByMerchant/${this.currentUser.userId}`).then((r) => {
-        this.staffList = r.data.user
+        this.staffList = r.data.data
       })
     },
     handleCancel () {
