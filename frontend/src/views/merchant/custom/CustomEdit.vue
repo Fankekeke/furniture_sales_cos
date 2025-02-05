@@ -63,6 +63,16 @@
             ]"/>
           </a-form-item>
         </a-col>
+        <a-col :span="24" v-if="customInfo.status == 1">
+          <a-form-item label='选择配送员' v-bind="formItemLayout">
+            <a-select v-decorator="[
+            'staffId',
+             { rules: [{ required: true, message: '请选择配送员!' }] }
+            ]">
+              <a-select-option v-for="(item, index) in staffList" :value="item.id" :key="index">{{ item.name }}</a-select-option>
+            </a-select>
+          </a-form-item>
+        </a-col>
       </a-row>
     </a-form>
   </a-modal>
@@ -109,11 +119,17 @@ export default {
       form: this.$form.createForm(this),
       loading: false,
       fileList: [],
+      staffList: [],
       previewVisible: false,
       previewImage: ''
     }
   },
   methods: {
+    selectStaffList () {
+      this.$get(`/cos/staff-info/selectStaffByMerchant/${this.currentUser.userId}`).then((r) => {
+        this.staffList = r.data.user
+      })
+    },
     handleCancel () {
       this.previewVisible = false
     },
