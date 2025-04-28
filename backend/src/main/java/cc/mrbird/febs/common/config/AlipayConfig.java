@@ -9,8 +9,6 @@ import org.springframework.stereotype.Component;
 /**
  * 配置文件读取
  *
- * @author 小道仙
- * @date 2020年2月18日
  */
 @Configuration
 @ConfigurationProperties

@@ -1,5 +1,5 @@
 <template>
-  <a-modal v-model="show" title="新增定制家具" @cancel="onClose" :width="800">
+  <a-modal v-model="show" title="定制家具" @cancel="onClose" :width="800">
     <template slot="footer">
       <a-button key="back" @click="onClose">
         取消
@@ -10,11 +10,60 @@
     </template>
     <a-form :form="form" layout="vertical">
       <a-row :gutter="20">
+        <a-col :span="12">
+          <a-form-item label='家具类型' v-bind="formItemLayout">
+            <a-input v-decorator="[
+            'type',
+            { rules: [{ required: true, message: '请输入家具类型!' }] }
+            ]"/>
+          </a-form-item>
+        </a-col>
+        <a-col :span="12"></a-col>
+        <a-col :span="12">
+          <a-form-item label='尺寸' v-bind="formItemLayout">
+            <a-input v-decorator="[
+            'size',
+            { rules: [{ required: true, message: '请输入尺寸!' }] }
+            ]"/>
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label='颜色' v-bind="formItemLayout">
+            <a-input v-decorator="[
+            'color',
+            { rules: [{ required: true, message: '请输入颜色!' }] }
+            ]"/>
+          </a-form-item>
+        </a-col>
         <a-col :span="24">
-          <a-form-item label='定制要求' v-bind="formItemLayout">
+          <a-form-item label='材质' v-bind="formItemLayout">
+            <a-radio-group v-decorator="[
+            'model',
+            { rules: [{ required: true, message: '请输入尺寸!' }] }
+            ]"button-style="solid">
+              <a-radio-button value="实木">
+                实木
+              </a-radio-button>
+              <a-radio-button value="板木">
+                板木
+              </a-radio-button>
+              <a-radio-button value="皮革">
+                皮革
+              </a-radio-button>
+              <a-radio-button value="布艺">
+                布艺
+              </a-radio-button>
+              <a-radio-button value="其它">
+                其它
+              </a-radio-button>
+            </a-radio-group>
+          </a-form-item>
+        </a-col>
+        <a-col :span="24">
+          <a-form-item label='备注' v-bind="formItemLayout">
             <a-textarea :rows="6" v-decorator="[
             'content',
-             { rules: [{ required: true, message: '请输入定制要求!' }] }
+             { rules: [{ required: true, message: '请输入备注!' }] }
             ]"/>
           </a-form-item>
         </a-col>

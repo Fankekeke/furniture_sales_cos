@@ -11,7 +11,6 @@
         di.content,
         di.raw_material,
         di.portion,
-        di.taste,
         di.unit_price,
         di.sale_num,
         di.status,

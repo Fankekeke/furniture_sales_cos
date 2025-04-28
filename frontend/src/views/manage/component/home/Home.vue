@@ -4,7 +4,7 @@
       <a-col :span="24">
         <div style="background: #ECECEC; padding: 30px;">
           <a-row :gutter="16">
-            <a-col :span="6">
+            <a-col :span="4">
               <a-card hoverable>
                 <a-row>
                   <a-col :span="24" style="font-size: 13px;margin-bottom: 8px;font-family: SimHei">本月订单量</a-col>
@@ -16,10 +16,10 @@
                 </a-row>
               </a-card>
             </a-col>
-            <a-col :span="6">
+            <a-col :span="4">
               <a-card hoverable>
                 <a-row>
-                  <a-col :span="24" style="font-size: 13px;margin-bottom: 8px;font-family: SimHei">本月收益</a-col>
+                  <a-col :span="24" style="font-size: 13px;margin-bottom: 8px;font-family: SimHei">本月订单收益</a-col>
                   <a-col :span="4"><a-icon type="arrow-up" style="font-size: 30px;margin-top: 3px"/></a-col>
                   <a-col :span="18" style="font-size: 28px;font-weight: 500;font-family: SimHei">
                     {{ titleData.monthOrderTotal }}
@@ -28,7 +28,19 @@
                 </a-row>
               </a-card>
             </a-col>
-            <a-col :span="6">
+            <a-col :span="4">
+              <a-card hoverable>
+                <a-row>
+                  <a-col :span="24" style="font-size: 13px;margin-bottom: 8px;font-family: SimHei">本月定制收益</a-col>
+                  <a-col :span="4"><a-icon type="arrow-up" style="font-size: 30px;margin-top: 3px"/></a-col>
+                  <a-col :span="18" style="font-size: 28px;font-weight: 500;font-family: SimHei">
+                    {{ titleData.customOrderPriceMonth }}
+                    <span style="font-size: 20px;margin-top: 3px">元</span>
+                  </a-col>
+                </a-row>
+              </a-card>
+            </a-col>
+            <a-col :span="4">
               <a-card hoverable>
                 <a-row>
                   <a-col :span="24" style="font-size: 13px;margin-bottom: 8px;font-family: SimHei">本年订单量</a-col>
@@ -40,13 +52,25 @@
                 </a-row>
               </a-card>
             </a-col>
-            <a-col :span="6">
+            <a-col :span="4">
               <a-card hoverable>
                 <a-row>
-                  <a-col :span="24" style="font-size: 13px;margin-bottom: 8px;font-family: SimHei">本年收益</a-col>
+                  <a-col :span="24" style="font-size: 13px;margin-bottom: 8px;font-family: SimHei">本年订单收益</a-col>
                   <a-col :span="4"><a-icon type="arrow-up" style="font-size: 30px;margin-top: 3px"/></a-col>
                   <a-col :span="18" style="font-size: 28px;font-weight: 500;font-family: SimHei">
                     {{ titleData.yearOrderTotal }}
+                    <span style="font-size: 20px;margin-top: 3px">元</span>
+                  </a-col>
+                </a-row>
+              </a-card>
+            </a-col>
+            <a-col :span="4">
+              <a-card hoverable>
+                <a-row>
+                  <a-col :span="24" style="font-size: 13px;margin-bottom: 8px;font-family: SimHei">本年定制收益</a-col>
+                  <a-col :span="4"><a-icon type="arrow-up" style="font-size: 30px;margin-top: 3px"/></a-col>
+                  <a-col :span="18" style="font-size: 28px;font-weight: 500;font-family: SimHei">
+                    {{ titleData.customOrderPriceYear }}
                     <span style="font-size: 20px;margin-top: 3px">元</span>
                   </a-col>
                 </a-row>
@@ -123,7 +147,9 @@ export default {
         monthOrderNum: 0,
         monthOrderTotal: 0,
         yearOrderNum: 0,
-        yearOrderTotal: 0
+        yearOrderTotal: 0,
+        customOrderPriceMonth: 0,
+        customOrderPriceYear: 0
       },
       loading: false,
       series: [{
@@ -277,6 +303,8 @@ export default {
           this.titleData.monthOrderTotal = r.data.monthOrderTotal
           this.titleData.yearOrderNum = r.data.yearOrderNum
           this.titleData.yearOrderTotal = r.data.yearOrderTotal
+          this.titleData.customOrderPriceMonth = r.data.customOrderPriceMonth
+          this.titleData.customOrderPriceYear = r.data.customOrderPriceYear
           this.bulletinList = r.data.bulletinInfoList
           let values = []
           if (r.data.orderNumDayList !== null && r.data.orderNumDayList.length !== 0) {
@@ -299,6 +327,8 @@ export default {
           this.titleData.monthOrderTotal = r.data.monthOrderTotal
           this.titleData.yearOrderNum = r.data.yearOrderNum
           this.titleData.yearOrderTotal = r.data.yearOrderTotal
+          this.titleData.customOrderPriceMonth = r.data.customOrderPriceMonth
+          this.titleData.customOrderPriceYear = r.data.customOrderPriceYear
           this.bulletinList = r.data.bulletinInfoList
           let values = []
           if (r.data.orderNumDayList !== null && r.data.orderNumDayList.length !== 0) {

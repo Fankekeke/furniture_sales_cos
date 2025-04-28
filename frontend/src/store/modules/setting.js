@@ -12,22 +12,22 @@ export default {
     isMobile: false,
     theme: db.get('THEME', 'light'),
     layout: db.get('LAYOUT', 'side'),
-    systemName: '家居销售系统',
+    systemName: '家具销售系统',
     copyright: `${new Date().getFullYear()} <a href="https://berserker287.github.io/" target="_blank">FanK</a>`,
     multipage: getBooleanValue(db.get('MULTIPAGE'), true),
     fixSiderbar: getBooleanValue(db.get('FIX_SIDERBAR'), true),
     fixHeader: getBooleanValue(db.get('FIX_HEADER'), true),
     colorList: [
-      'rgb(245, 34, 45)',
-      'rgb(250, 84, 28)',
-      'rgb(250, 173, 20)',
-      'rgb(66, 185, 131)',
-      'rgb(82, 196, 26)',
-      'rgb(24, 144, 255)',
-      'rgb(47, 84, 235)',
-      'rgb(114, 46, 209)'
+      'rgb(233, 170, 173)',
+      'rgb(226, 172, 154)',
+      'rgb(248, 220, 164)',
+      'rgb(140, 245, 197)',
+      'rgb(181, 221, 161)',
+      'rgb(163, 205, 244)',
+      'rgb(175, 188, 239)',
+      'rgb(179, 153, 217)'
     ],
-    color: db.get('COLOR', 'rgb(24, 144, 255)')
+    color: db.get('COLOR', 'rgb(163, 205, 244)')
   },
   mutations: {
     setDevice (state, isMobile) {

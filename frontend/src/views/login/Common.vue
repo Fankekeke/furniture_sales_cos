@@ -3,7 +3,7 @@
     <div class="content" style="margin: 0 auto">
       <div class="top">
         <div class="header">
-          <span class="title" style="color: white">家居销售系统</span>
+          <span class="title" style="color: white">家具销售系统</span>
         </div>
         <div class="desc"></div>
       </div>

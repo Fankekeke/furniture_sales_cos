@@ -15,6 +15,11 @@
         coi.status,
         coi.order_price,
         coi.remark,
+        coi.type,
+        coi.model,
+        coi.size,
+        coi.color,
+        coi.check_date,
         ui.name as userName,
         ui.images as userImages,
         mi.name as merchantName,
@@ -42,6 +47,9 @@
         </if>
         <if test="customOrderInfo.userId != null">
             AND ui.user_id = #{customOrderInfo.userId}
+        </if>
+        <if test="customOrderInfo.merchantId != null">
+            AND mi.user_id = #{customOrderInfo.merchantId}
         </if>
         order by
         coi.create_date desc

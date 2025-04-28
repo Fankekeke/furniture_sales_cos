@@ -209,4 +209,36 @@
         ORDER BY
         days ASC
     </select>
+
+    <!-- 本月订单信息 -->
+    <select id="selectCustomOrderByMonth" resultType="java.math.BigDecimal">
+        SELECT
+        IFNULL( sum( order_price ), 0 )
+        FROM
+        custom_order_info
+        WHERE
+        `status` IN ( 3, 4 )
+        <if test="merchantId != null">
+            AND merchant_id = #{merchantId}
+        </if>
+        and DATE_FORMAT( create_date, '%Y%m' ) = DATE_FORMAT(
+        CURDATE(),
+        '%Y%m')
+    </select>
+
+    <!-- 本年订单信息 -->
+    <select id="selectCustomOrderByYear" resultType="java.math.BigDecimal">
+        SELECT
+        IFNULL( sum( order_price ), 0 )
+        FROM
+        custom_order_info
+        WHERE
+        `status` IN ( 3, 4 )
+        <if test="merchantId != null">
+            AND merchant_id = #{merchantId}
+        </if>
+        and DATE_FORMAT( create_date, '%Y' ) = DATE_FORMAT(
+        CURDATE(),
+        '%Y')
+    </select>
 </mapper>

@@ -78,6 +78,11 @@ public class CustomOrderInfo implements Serializable {
      * 配送员
      */
     private Integer staffId;
+    private String type;
+    private String size;
+    private String model;
+    private String color;
+    private String checkDate;
 
     @TableField(exist = false)
     private String userName;

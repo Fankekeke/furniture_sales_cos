@@ -105,6 +105,13 @@ public class MerchantInfoServiceImpl extends ServiceImpl<MerchantInfoMapper, Mer
         BigDecimal orderYearPrice = orderYearList.stream().map(OrderInfo::getAfterOrderPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
         result.put("yearOrderTotal", orderYearPrice);
 
+        // 本月定制收益
+        BigDecimal customOrderPriceMonth = orderInfoMapper.selectCustomOrderByMonth(merchantInfo.getId());
+        result.put("customOrderPriceMonth", customOrderPriceMonth);
+        // 本年定制收益
+        BigDecimal customOrderPriceYear = orderInfoMapper.selectCustomOrderByMonth(merchantInfo.getId());
+        result.put("customOrderPriceYear", customOrderPriceYear);
+
         // 近十天销售订单统计
         result.put("orderNumDayList", orderInfoMapper.selectOrderNumWithinDays(merchantInfo.getId()));
         // 近十天销售金额统计
@@ -155,6 +162,13 @@ public class MerchantInfoServiceImpl extends ServiceImpl<MerchantInfoMapper, Mer
         // 本年总收益
         BigDecimal orderYearPrice = orderYearList.stream().map(OrderInfo::getAfterOrderPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
         result.put("yearOrderTotal", orderYearPrice);
+
+        // 本月定制收益
+        BigDecimal customOrderPriceMonth = orderInfoMapper.selectCustomOrderByMonth(null);
+        result.put("customOrderPriceMonth", customOrderPriceMonth);
+        // 本年定制收益
+        BigDecimal customOrderPriceYear = orderInfoMapper.selectCustomOrderByMonth(null);
+        result.put("customOrderPriceYear", customOrderPriceYear);
 
         // 近十天销售订单统计
         result.put("orderNumDayList", orderInfoMapper.selectOrderNumWithinDays(null));

@@ -11,8 +11,8 @@
     <div style="width: 100%;background-color: #f6f5f5">
       <a-icon type="arrow-left" style="position: absolute;z-index: 999;color: red;font-size: 20px;margin: 15px" @click="home"/>
       <a-row style="height:100vh;font-family: SimHei">
-        <a-col :span="15" style="height: 100%;">
-          <div style="width: 100%;height: 100%;box-shadow: 3px 3px 3px rgba(0, 0, 0, .2);color:#fff">
+        <a-col :span="15" style="height: 100vh; overflow: auto;">
+          <div style="width: 100%;height: 100%;color:#fff">
             <div style="text-align: center;margin-top: 20px">
               <a-radio-group v-model="typeId" @change="onChange">
                 <a-radio-button value="-1">全部</a-radio-button>

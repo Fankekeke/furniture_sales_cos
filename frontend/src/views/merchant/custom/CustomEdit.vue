@@ -16,6 +16,55 @@
     </template>
     <a-form :form="form" layout="vertical">
       <a-row :gutter="20">
+        <a-col :span="12">
+          <a-form-item label='家具类型' v-bind="formItemLayout">
+            <a-input disabled v-decorator="[
+            'type',
+            { rules: [{ required: true, message: '请输入家具类型!' }] }
+            ]"/>
+          </a-form-item>
+        </a-col>
+        <a-col :span="12"></a-col>
+        <a-col :span="12">
+          <a-form-item label='尺寸' v-bind="formItemLayout">
+            <a-input disabled v-decorator="[
+            'size',
+            { rules: [{ required: true, message: '请输入尺寸!' }] }
+            ]"/>
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label='颜色' v-bind="formItemLayout">
+            <a-input disabled v-decorator="[
+            'color',
+            { rules: [{ required: true, message: '请输入颜色!' }] }
+            ]"/>
+          </a-form-item>
+        </a-col>
+        <a-col :span="24">
+          <a-form-item label='材质' v-bind="formItemLayout">
+            <a-radio-group disabled v-decorator="[
+            'model',
+            { rules: [{ required: true, message: '请输入尺寸!' }] }
+            ]"button-style="solid">
+              <a-radio-button value="实木">
+                实木
+              </a-radio-button>
+              <a-radio-button value="板木">
+                板木
+              </a-radio-button>
+              <a-radio-button value="皮革">
+                皮革
+              </a-radio-button>
+              <a-radio-button value="布艺">
+                布艺
+              </a-radio-button>
+              <a-radio-button value="其它">
+                其它
+              </a-radio-button>
+            </a-radio-group>
+          </a-form-item>
+        </a-col>
         <a-col :span="24">
           <a-form-item label='定制要求' v-bind="formItemLayout">
             <a-textarea disabled :rows="6" v-decorator="[
@@ -63,6 +112,14 @@
             ]"/>
           </a-form-item>
         </a-col>
+        <a-col :span="12" v-if="customInfo.status >= 1">
+          <a-form-item label='预计送达时间' v-bind="formItemLayout">
+            <a-date-picker :disabled="customInfo.status >= 1" show-time format="YYYY-MM-DD HH:mm:ss" style="width: 100%" v-decorator="[
+            'checkDate',
+            { rules: [{ required: true, message: '请输入预计送达时间!' }] }
+            ]"/>
+          </a-form-item>
+        </a-col>
         <a-col :span="24" v-if="customInfo.status == 1">
           <a-form-item label='选择配送员' v-bind="formItemLayout">
             <a-select v-decorator="[
@@ -80,6 +137,7 @@
 
 <script>
 import {mapState} from 'vuex'
+import moment from 'moment'
 function getBase64 (file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
@@ -158,12 +216,15 @@ export default {
     setFormValues ({...bulletin}) {
       this.customInfo = bulletin
       this.rowId = bulletin.id
-      let fields = ['title', 'content', 'remark', 'orderPrice', 'type']
+      let fields = ['title', 'content', 'remark', 'orderPrice', 'type', 'size', 'color', 'model', 'checkDate']
       let obj = {}
       Object.keys(bulletin).forEach((key) => {
         if (key === 'images') {
           this.fileList = []
           this.imagesInit(bulletin['images'])
+        }
+        if (key === 'checkDate' && bulletin[key] != null) {
+          bulletin[key] = moment(bulletin[key], 'YYYY-MM-DD HH:mm:ss')
         }
         if (key === 'rackUp' || key === 'type') {
           bulletin[key] = bulletin[key].toString()
@@ -197,6 +258,9 @@ export default {
         values.id = this.rowId
         values.status = status
         values.images = images.length > 0 ? images.join(',') : null
+        if (values.checkDate) {
+          values.checkDate = moment(values.checkDate).format('YYYY-MM-DD HH:mm:ss')
+        }
         if (!err) {
           this.loading = true
           this.$put('/cos/custom-order-info', {

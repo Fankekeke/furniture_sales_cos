@@ -2,8 +2,8 @@
   <div style="background:#ECECEC; padding:30px;margin-top: 30px;margin-bottom: 30px">
     <div style="height: 450px;">
       <div style="height: 350px;background: url(../static/img/interior-3530343_1920.jpg) no-repeat center;padding: 50px">
-        <div style="font-size: 35px;font-weight: 500;color: white;font-family: SimHei">欢迎来到居然之家~</div>
-        <div style="font-size: 22px;font-weight: 500;color: white;font-family: SimHei">开始选购</div>
+        <div style="font-size: 55px;font-weight: 500;color: white;text-align: center;font-family: SimHei">欢迎光临！</div>
+        <div style="font-size: 30px;font-weight: 500;color: white;text-align: center;font-family: SimHei">开始选购吧</div>
         <div style="height: 180px;margin-top: 100px">
           <a-card :bordered="false" hoverable style="height: 100%;box-shadow: 3px 3px 3px rgba(0, 0, 0, .2);color:#fff">
             <a-row style="padding: 50px;margin: 0 auto">

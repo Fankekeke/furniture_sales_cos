@@ -23,9 +23,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b51975f-5e37-45a1-bd9d-0f3c12f944d0" name="Default Changelist" comment="fix -地图展示">
-      <change afterPath="$PROJECT_DIR$/src/views/manage/component/DishesView.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manage/component/user/Map.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/component/user/Map.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -264,6 +262,11 @@
       <workItem from="1726311635629" duration="28000" />
       <workItem from="1726664913021" duration="31000" />
       <workItem from="1736769518180" duration="5767000" />
+      <workItem from="1740050006491" duration="53000" />
+      <workItem from="1741266911775" duration="1102000" />
+      <workItem from="1741701204217" duration="1171000" />
+      <workItem from="1742694948252" duration="763000" />
+      <workItem from="1745638741764" duration="56000" />
     </task>
     <task id="LOCAL-00001" summary="fix -数据统计">
       <created>1692717658877</created>
