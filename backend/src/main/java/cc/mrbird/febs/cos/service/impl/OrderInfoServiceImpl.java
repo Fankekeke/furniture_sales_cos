@@ -494,6 +494,9 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
         orderInfo.setStatus("1");
         orderInfo.setPayDate(DateUtil.formatDateTime(new Date()));
 
+        // 获取订单详情
+        List<OrderItemInfo> orderItemInfoList = orderItemInfoService.list(Wrappers.<OrderItemInfo>lambdaQuery().eq(OrderItemInfo::getOrderId, orderInfo.getId()));
+
         // 用户添加积分
         UserInfo userInfo = userInfoService.getById(orderInfo.getUserId());
         userInfo.setIntegral(NumberUtil.add(userInfo.getIntegral(), orderInfo.getIntegral()));
@@ -540,6 +543,27 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
             context.setVariable("custom", userInfo.getName() + "，您好，在 " + merchantInfo.getName() + " 消费订单 " + orderCode + "，已支付" + orderInfo.getAfterOrderPrice() + "元。");
             String emailContent = templateEngine.process("registerEmail", context);
             mailService.sendHtmlMail(userInfo.getMail(), DateUtil.formatDate(new Date()) + "支付通知", emailContent);
+        }
+
+        // 减少库存
+        if (CollectionUtil.isNotEmpty(orderItemInfoList)) {
+            List<DishesInfo> toUpdateList = new ArrayList<>();
+            List<Integer> dishesIdList = orderItemInfoList.stream().map(OrderItemInfo::getDishesId).distinct().collect(Collectors.toList());
+            List<DishesInfo> dishesInfoList = dishesInfoService.list(Wrappers.<DishesInfo>lambdaQuery().in(DishesInfo::getId, dishesIdList));
+            Map<Integer, DishesInfo> dishesInfoMap = dishesInfoList.stream().collect(Collectors.toMap(DishesInfo::getId, dishesInfo -> dishesInfo));
+
+            orderItemInfoList.forEach(orderItemInfo -> {
+                DishesInfo dishesInfo = dishesInfoMap.get(orderItemInfo.getDishesId());
+                if (dishesInfo != null) {
+                    dishesInfo.setLaveNum(dishesInfo.getLaveNum() - orderItemInfo.getAmount());
+                    dishesInfo.setSaleNum(dishesInfo.getSaleNum() + orderItemInfo.getAmount());
+                    if (dishesInfo.getLaveNum() <= 0) {
+                        dishesInfo.setStatus("0");
+                    }
+                    toUpdateList.add(dishesInfo);
+                }
+            });
+            dishesInfoService.updateBatchById(toUpdateList);
         }
 
         // 更新用户积分
