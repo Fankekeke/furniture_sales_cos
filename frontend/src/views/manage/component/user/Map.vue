@@ -41,11 +41,11 @@
                           <div style="color: #f5222d; font-size: 13px;float: left;margin-top: 5px">{{ item.unitPrice }}元</div>
                         </a-col>
                         <a-col :span="3" style="height: 100%;text-align: right">
-                          <a-icon type="heart" v-if="checkCollect(item.id)" style="font-size: 20px;margin-right: 5px;margin-top: 10px;cursor: pointer;color: red" @click="collectDel(item)"/>
-                          <a-icon type="heart" v-else style="font-size: 20px;margin-right: 5px;margin-top: 10px;cursor: pointer;" @click="collectAdd(item)"/>
+                          <a-icon type="heart" v-if="checkCollect(item.id)" style="font-size: 20px;margin-right: 5px;margin-top: 10px;cursor: pointer;color: red" @click.stop="collectDel(item)"/>
+                          <a-icon type="heart" v-else style="font-size: 20px;margin-right: 5px;margin-top: 10px;cursor: pointer;" @click.stop="collectAdd(item)"/>
                         </a-col>
                         <a-col :span="3" style="height: 100%;text-align: right">
-                          <a-icon type="plus-square" theme="twoTone" style="font-size: 20px;margin-right: 5px;margin-top: 10px;cursor: pointer;" @click="dishesAdd(item)" v-show="nextFlag == 1"/>
+                          <a-icon type="plus-square" theme="twoTone" style="font-size: 20px;margin-right: 5px;margin-top: 10px;cursor: pointer;" @click.stop="dishesAdd(item)" v-show="nextFlag == 1"/>
                         </a-col>
                       </a-row>
                     </div>

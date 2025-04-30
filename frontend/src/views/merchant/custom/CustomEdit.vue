@@ -46,7 +46,7 @@
             <a-radio-group disabled v-decorator="[
             'model',
             { rules: [{ required: true, message: '请输入尺寸!' }] }
-            ]"button-style="solid">
+            ]" button-style="solid">
               <a-radio-button value="实木">
                 实木
               </a-radio-button>
@@ -114,7 +114,7 @@
         </a-col>
         <a-col :span="12" v-if="customInfo.status >= 1">
           <a-form-item label='预计送达时间' v-bind="formItemLayout">
-            <a-date-picker :disabled="customInfo.status >= 1" show-time format="YYYY-MM-DD HH:mm:ss" style="width: 100%" v-decorator="[
+            <a-date-picker :disabled="!(customInfo.status >= 1)" show-time format="YYYY-MM-DD HH:mm:ss" style="width: 100%" v-decorator="[
             'checkDate',
             { rules: [{ required: true, message: '请输入预计送达时间!' }] }
             ]"/>
