@@ -7,18 +7,22 @@
           <div :class="advanced ? null: 'fold'">
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="积分维修编号"
-                :labelCol="{span: 7}"
-                :wrapperCol="{span: 16, offset: 1}">
-                <a-input v-model="queryParams.code"/>
+                label="用户名称"
+                :labelCol="{span: 5}"
+                :wrapperCol="{span: 18, offset: 1}">
+                <a-input v-model="queryParams.userName"/>
               </a-form-item>
             </a-col>
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="积分维修名称"
-                :labelCol="{span: 7}"
-                :wrapperCol="{span: 16, offset: 1}">
-                <a-input v-model="queryParams.name"/>
+                label="维修状态"
+                :labelCol="{span: 5}"
+                :wrapperCol="{span: 18, offset: 1}">
+                <a-select v-model="queryParams.status" allowClear>
+                  <a-select-option value="1">已下单</a-select-option>
+                  <a-select-option value="2">已派发</a-select-option>
+                  <a-select-option value="3">已完成</a-select-option>
+                </a-select>
               </a-form-item>
             </a-col>
           </div>
@@ -31,7 +35,7 @@
     </div>
     <div>
       <div class="operator">
-        <a-button type="primary" ghost @click="add">新增</a-button>
+<!--        <a-button type="primary" ghost @click="add">添加订单</a-button>-->
         <a-button @click="batchDelete">删除</a-button>
       </div>
       <!-- 表格区域 -->
@@ -44,45 +48,73 @@
                :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
                :scroll="{ x: 900 }"
                @change="handleTableChange">
+        <template slot="titleShow" slot-scope="text, record">
+          <template>
+            <a-tooltip>
+              <template slot="title">
+                {{ record.title }}
+              </template>
+              {{ record.title.slice(0, 8) }} ...
+            </a-tooltip>
+          </template>
+        </template>
         <template slot="operation" slot-scope="text, record">
-          <a-icon type="setting" theme="twoTone" twoToneColor="#4a9ff5" @click="edit(record)" title="修 改"></a-icon>
+          <a-icon type="file-search" @click="orderViewOpen(record)" title="修 改" style="margin-left: 15px"></a-icon>
+          <a-icon v-if="record.addressId != null && record.status == 1" type="setting" theme="twoTone" twoToneColor="#4a9ff5" @click="orderAuditOpen(record)" title="修 改" style="margin-left: 15px"></a-icon>
         </template>
       </a-table>
     </div>
-    <material-add
-      v-if="materialAdd.visiable"
-      @close="handlematerialAddClose"
-      @success="handlematerialAddSuccess"
-      :materialAddVisiable="materialAdd.visiable">
-    </material-add>
-    <material-edit
-      ref="materialEdit"
-      @close="handlematerialEditClose"
-      @success="handlematerialEditSuccess"
-      :materialEditVisiable="materialEdit.visiable">
-    </material-edit>
+    <order-view
+      @close="handleorderViewClose"
+      :orderShow="orderView.visiable"
+      :orderData="orderView.data">
+    </order-view>
+    <order-audit
+      @close="handleorderAuditViewClose"
+      @success="handleorderAuditViewSuccess"
+      :orderShow="orderAuditView.visiable"
+      :orderData="orderAuditView.data">
+    </order-audit>
+    <MapView
+      @close="handleorderMapViewClose"
+      :orderShow="orderMapView.visiable"
+      :orderData="orderMapView.data">
+    </MapView>
   </a-card>
 </template>
 
 <script>
 import RangeDate from '@/components/datetime/RangeDate'
-import materialAdd from './RepairTypeAdd.vue'
-import materialEdit from './RepairTypeEdit.vue'
 import {mapState} from 'vuex'
 import moment from 'moment'
+import OrderView from './RepairRecordView.vue'
+import OrderAudit from './RepairRecordAudit.vue'
+import MapView from '../../manage/map/Map.vue'
 moment.locale('zh-cn')
 
 export default {
-  name: 'material',
-  components: {materialAdd, materialEdit, RangeDate},
+  name: 'order',
+  components: {OrderAudit, OrderView, RangeDate, MapView},
   data () {
     return {
       advanced: false,
-      materialAdd: {
+      orderAdd: {
         visiable: false
       },
-      materialEdit: {
+      orderEdit: {
         visiable: false
+      },
+      orderMapView: {
+        visiable: false,
+        data: null
+      },
+      orderView: {
+        visiable: false,
+        data: null
+      },
+      orderStatusView: {
+        visiable: false,
+        data: null
       },
       queryParams: {},
       filteredInfo: null,
@@ -99,6 +131,10 @@ export default {
         showSizeChanger: true,
         showTotal: (total, range) => `显示 ${range[0]} ~ ${range[1]} 条记录，共 ${total} 条记录`
       },
+      orderAuditView: {
+        visiable: false,
+        data: null
+      },
       userList: []
     }
   },
@@ -108,16 +144,28 @@ export default {
     }),
     columns () {
       return [{
-        title: '积分维修编号',
-        dataIndex: 'code',
+        title: '维修商家',
+        dataIndex: 'merchantName',
         ellipsis: true
       }, {
-        title: '积分维修名称',
-        dataIndex: 'name',
+        title: '家具名称',
+        dataIndex: 'dishesName',
         ellipsis: true
       }, {
-        title: '积分维修描述',
-        dataIndex: 'content',
+        title: '图片',
+        dataIndex: 'dishesName',
+        customRender: (text, record, index) => {
+          if (!record.dishesImages) return <a-avatar shape="square" icon="user" />
+          return <a-popover>
+            <template slot="content">
+              <a-avatar shape="square" size={132} icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.dishesImages.split(',')[0] } />
+            </template>
+            <a-avatar shape="square" icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.dishesImages.split(',')[0] } />
+          </a-popover>
+        }
+      }, {
+        title: '用户名称',
+        dataIndex: 'userName',
         customRender: (text, row, index) => {
           if (text !== null) {
             return text
@@ -127,7 +175,19 @@ export default {
         },
         ellipsis: true
       }, {
-        title: '所需积分',
+        title: '用户头像',
+        dataIndex: 'userImages',
+        customRender: (text, record, index) => {
+          if (!record.userImages) return <a-avatar shape="square" icon="user" />
+          return <a-popover>
+            <template slot="content">
+              <a-avatar shape="square" size={132} icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.userImages.split(',')[0] } />
+            </template>
+            <a-avatar shape="square" icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.userImages.split(',')[0] } />
+          </a-popover>
+        }
+      }, {
+        title: '消耗积分',
         dataIndex: 'integral',
         customRender: (text, row, index) => {
           if (text !== null) {
@@ -135,16 +195,31 @@ export default {
           } else {
             return '- -'
           }
-        },
-        ellipsis: true
+        }
       }, {
-        title: '销量',
-        dataIndex: 'saleNum',
+        title: '维修类型',
+        dataIndex: 'repairTypeName',
         customRender: (text, row, index) => {
           if (text !== null) {
             return text
           } else {
             return '- -'
+          }
+        },
+        ellipsis: true
+      }, {
+        title: '订单状态',
+        dataIndex: 'status',
+        customRender: (text, row, index) => {
+          switch (text) {
+            case '1':
+              return <a-tag>已下单</a-tag>
+            case '2':
+              return <a-tag>已派发</a-tag>
+            case '3':
+              return <a-tag>已完成</a-tag>
+            default:
+              return '- -'
           }
         }
       }, {
@@ -169,6 +244,53 @@ export default {
     this.fetch()
   },
   methods: {
+    orderComplete (row) {
+      this.$get(`/cos/furniture-repair-record/audit`, {
+        'orderCode': row.code,
+        'status': 3
+      }).then((r) => {
+        this.$message.success('订单完成')
+        this.fetch()
+      })
+    },
+    orderMapOpen (row) {
+      this.orderMapView.data = row
+      this.orderMapView.visiable = true
+    },
+    handleorderMapViewClose () {
+      this.orderMapView.visiable = false
+    },
+    orderStatusOpen (row) {
+      this.orderStatusView.data = row
+      this.orderStatusView.visiable = true
+    },
+    orderAuditOpen (row) {
+      this.orderAuditView.data = row
+      this.orderAuditView.visiable = true
+    },
+    orderViewOpen (row) {
+      this.orderView.data = row
+      this.orderView.visiable = true
+    },
+    handleorderViewClose () {
+      this.orderView.visiable = false
+    },
+    handleorderStatusViewClose () {
+      this.orderStatusView.visiable = false
+    },
+    handleorderStatusViewSuccess () {
+      this.orderStatusView.visiable = false
+      this.$message.success('修改成功')
+      this.fetch()
+    },
+    handleorderAuditViewClose () {
+      this.orderAuditView.visiable = false
+    },
+    handleorderAuditViewSuccess () {
+      this.orderAuditView.visiable = false
+      this.$message.success('设置成功')
+      this.fetch()
+    },
     onSelectChange (selectedRowKeys) {
       this.selectedRowKeys = selectedRowKeys
     },
@@ -176,26 +298,26 @@ export default {
       this.advanced = !this.advanced
     },
     add () {
-      this.materialAdd.visiable = true
+      this.orderAdd.visiable = true
     },
-    handlematerialAddClose () {
-      this.materialAdd.visiable = false
+    handleorderAddClose () {
+      this.orderAdd.visiable = false
     },
-    handlematerialAddSuccess () {
-      this.materialAdd.visiable = false
-      this.$message.success('新增积分维修成功')
+    handleorderAddSuccess () {
+      this.orderAdd.visiable = false
+      this.$message.success('添加平台订单成功')
       this.search()
     },
     edit (record) {
-      this.$refs.materialEdit.setFormValues(record)
-      this.materialEdit.visiable = true
+      this.$refs.orderEdit.setFormValues(record)
+      this.orderEdit.visiable = true
     },
-    handlematerialEditClose () {
-      this.materialEdit.visiable = false
+    handleorderEditClose () {
+      this.orderEdit.visiable = false
     },
-    handlematerialEditSuccess () {
-      this.materialEdit.visiable = false
-      this.$message.success('修改积分维修成功')
+    handleorderEditSuccess () {
+      this.orderEdit.visiable = false
+      this.$message.success('修改成功')
       this.search()
     },
     handleDeptChange (value) {
@@ -213,7 +335,7 @@ export default {
         centered: true,
         onOk () {
           let ids = that.selectedRowKeys.join(',')
-          that.$delete('/cos/repair-type-info/' + ids).then(() => {
+          that.$delete('/cos/furniture-repair-record/' + ids).then(() => {
             that.$message.success('删除成功')
             that.selectedRowKeys = []
             that.search()
@@ -283,7 +405,11 @@ export default {
         params.size = this.pagination.defaultPageSize
         params.current = this.pagination.defaultCurrent
       }
-      this.$get('/cos/repair-type-info/page', {
+      if (params.status === undefined) {
+        delete params.status
+      }
+      params.merchantId = this.currentUser.userId
+      this.$get('/cos/furniture-repair-record/page', {
         ...params
       }).then((r) => {
         let data = r.data.data

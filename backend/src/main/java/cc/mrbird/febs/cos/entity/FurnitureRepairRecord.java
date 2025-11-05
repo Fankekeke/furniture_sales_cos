@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -22,6 +24,12 @@ public class FurnitureRepairRecord implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
+     * 主键ID
+     */
+    @TableId(type = IdType.AUTO)
+    private Integer id;
+
+    /**
      * 编号
      */
     private String code;
@@ -35,6 +43,11 @@ public class FurnitureRepairRecord implements Serializable {
      * 所属商家
      */
     private Integer merchantId;
+
+    /**
+     * 家具ID
+     */
+    private Integer furnitureId;
 
     /**
      * 状态（1.已下单 2.已派发 3.已完成）

@@ -42,6 +42,7 @@
 <!--        <a-button type="primary" ghost @click="add">添加订单</a-button>-->
         <a-button @click="batchDelete">删除</a-button>
       </div>
+      <a-alert message="已收货的订单家具可使用个人积分进行维修保养" type="info" show-icon />
       <!-- 表格区域 -->
       <a-table ref="TableInfo"
                :columns="columns"
@@ -64,6 +65,7 @@
         </template>
         <template slot="operation" slot-scope="text, record">
           <a-icon type="file-search" @click="orderViewOpen(record)" title="详 情"></a-icon>
+          <a-icon v-if="record.status == 3" type="code-sandbox" @click="orderRepairOpen(record)" title="维修保养" style="margin-left: 15px"></a-icon>
           <a-icon v-if="record.status ==  0" type="alipay" @click="orderPay(record)" title="支 付" style="margin-left: 15px"></a-icon>
           <a-icon v-if="record.status == 2 && record.type == 1" type="check" @click="orderComplete(record)" title="订单完成" style="margin-left: 15px"></a-icon>
           <a-icon v-if="record.type == 1" type="cluster" @click="orderMapOpen(record)" title="地 图" style="margin-left: 15px"></a-icon>
@@ -88,11 +90,12 @@
       :orderShow="orderView.visiable"
       :orderData="orderView.data">
     </order-view>
-<!--    <order-add-->
-<!--      @close="handleorderAddClose"-->
-<!--      @success="handleorderAddSuccess"-->
-<!--      :orderAddShow="orderAdd.visiable">-->
-<!--    </order-add>-->
+    <order-repair
+      @close="handleorderRepairClose"
+      @success="handleorderRepairSuccess"
+      :orderShow="orderRepair.visiable"
+      :orderData="orderRepair.data">
+    </order-repair>
     <MapView
       @close="handleorderMapViewClose"
       :orderShow="orderMapView.visiable"
@@ -114,6 +117,7 @@ import moment from 'moment'
 import OrderAdd from './OrderAdd'
 import OrderAudit from './OrderAudit'
 import OrderView from './OrderView'
+import OrderRepair from './OrderRepair'
 import OrderStatus from './OrderStatus.vue'
 import OrderEvaluate from './OrderEvaluate'
 import MapView from '../../manage/map/Map.vue'
@@ -121,7 +125,7 @@ moment.locale('zh-cn')
 
 export default {
   name: 'order',
-  components: {OrderView, OrderAudit, RangeDate, OrderStatus, OrderAdd, MapView, OrderEvaluate},
+  components: {OrderView, OrderAudit, RangeDate, OrderStatus, OrderAdd, MapView, OrderRepair, OrderEvaluate},
   data () {
     return {
       advanced: false,
@@ -132,6 +136,10 @@ export default {
         visiable: false
       },
       orderMapView: {
+        visiable: false,
+        data: null
+      },
+      orderRepair: {
         visiable: false,
         data: null
       },
@@ -340,6 +348,17 @@ export default {
     orderAuditOpen (row) {
       this.orderAuditView.data = row
       this.orderAuditView.visiable = true
+    },
+    orderRepairOpen (row) {
+      this.orderRepair.data = row
+      this.orderRepair.visiable = true
+    },
+    handleorderRepairClose () {
+      this.orderRepair.visiable = false
+    },
+    handleorderRepairSuccess () {
+      this.$message.success('提交成功')
+      this.orderRepair.visiable = false
     },
     orderViewOpen (row) {
       this.orderView.data = row

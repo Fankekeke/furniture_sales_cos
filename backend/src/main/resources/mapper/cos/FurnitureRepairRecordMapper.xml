@@ -9,6 +9,7 @@
         frr.CODE,
         frr.user_id,
         frr.merchant_id,
+        frr.furniture_id,
         frr.STATUS,
         frr.address_id,
         frr.type_id,
@@ -27,7 +28,11 @@
         ai.address,
         si.name,
         si.images,
-        rti.name AS repairTypeName
+        rti.name AS repairTypeName,
+        di.name as dishesName,
+        di.images as dishesImages,
+        ai.longitude,
+        ai.latitude
         FROM
         furniture_repair_record frr
         LEFT JOIN user_info ui ON (ui.id = frr.user_id)
@@ -35,6 +40,7 @@
         LEFT JOIN staff_info si ON (si.id = frr.staff_id)
         LEFT JOIN address_info ai ON (ai.id = frr.address_id)
         LEFT JOIN repair_type_info rti ON (rti.id = frr.type_id)
+        LEFT JOIN dishes_info di ON (di.id = frr.furniture_id)
         WHERE
         1 = 1
         <if test="furnitureRepairRecord.userName != null and furnitureRepairRecord.userName != ''">

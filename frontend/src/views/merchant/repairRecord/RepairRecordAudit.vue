@@ -1,6 +1,9 @@
 <template>
-  <a-modal v-model="show" title="维修保养详情" @cancel="onClose" :width="1000">
+  <a-modal v-model="show" title="维修处理" @cancel="onClose" :width="1000">
     <template slot="footer">
+      <a-button key="back" @click="checkDealer" type="primary">
+        分配
+      </a-button>
       <a-button @click="onClose">
         关闭
       </a-button>
@@ -17,7 +20,7 @@
       <a-row style="padding-left: 24px;padding-right: 24px;" :gutter="15">
         <a-col :span="24">
           <a-col style="margin-bottom: 15px; border-bottom: 1px solid #e8e8e8; padding-bottom: 10px;">
-            <span style="font-size: 16px; font-weight: 650; color: #000c17">维修保养信息</span>
+            <span style="font-size: 16px; font-weight: 650; color: #000c17">维修信息</span>
           </a-col>
           <a-col :span="24">
             <a-row :gutter="16">
@@ -58,6 +61,7 @@
                 </div>
               </a-col>
             </a-row>
+
             <a-row :gutter="16">
               <a-col :span="24">
                 <div class="info-item info-item-full">
@@ -69,12 +73,39 @@
           </a-col>
         </a-col>
         <br/>
-        <br/>
-        <a-col style="margin-top: 25px; border-bottom: 1px solid #e8e8e8; padding-bottom: 10px;">
-          <span style="font-size: 16px; font-weight: 650; color: #000c17">上门维修保养地址</span>
-        </a-col>
         <a-col :span="24">
-          <div id="areas" style="width: 100%;height: 350px;box-shadow: 0 0 0 10px white;"></div>
+          <a-col style="margin-bottom: 15px; border-bottom: 1px solid #e8e8e8; padding-bottom: 10px;">
+            <span style="font-size: 16px; font-weight: 650; color: #000c17">选择上门维修员工</span>
+          </a-col>
+          <div v-if="selectedStaffInfo" class="selected-staff-info">
+            <div class="section-header">
+              <span class="section-title">已选员工</span>
+            </div>
+            <div class="staff-detail-card">
+              <div class="staff-details">
+                <div class="staff-detail-item">
+                  <span class="detail-label">姓名：</span>
+                  <span class="detail-value">{{ selectedStaffInfo.name }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="staff-list-container">
+            <div
+              v-for="(item, index) in staffList"
+              :key="index"
+              class="staff-avatar-item"
+              @click="assignStaff(item.id)"
+            >
+              <a-avatar
+                :src="item.images ? 'http://127.0.0.1:9527/imagesWeb/' + item.images : undefined"
+                icon="user"
+                size="large"
+                :class="{ 'selected': staffId === item.id }"
+              />
+              <div class="staff-name">{{ item.name }}</div>
+            </div>
+          </div>
         </a-col>
       </a-row>
     </div>
@@ -83,7 +114,6 @@
 
 <script>
 import moment from 'moment'
-import baiduMap from '@/utils/map/baiduMap'
 import {mapState} from 'vuex'
 function getBase64 (file) {
   return new Promise((resolve, reject) => {
@@ -159,10 +189,6 @@ export default {
     orderShow: function (value) {
       if (value) {
         this.current = Math.abs(this.orderData.status)
-        setTimeout(() => {
-          baiduMap.initMap('areas')
-          this.local(this.orderData)
-        }, 400)
       }
     }
   },
@@ -185,6 +211,7 @@ export default {
       addressInfo: null,
       staffInfo: null,
       evaluateInfo: null,
+      selectedStaffInfo: null,
       staffId: null,
       staffList: []
     }
@@ -193,17 +220,9 @@ export default {
     this.selectStaffList()
   },
   methods: {
-    local (address) {
-      baiduMap.clearOverlays()
-      baiduMap.rMap().enableScrollWheelZoom(true)
-      // eslint-disable-next-line no-undef
-      let point = new BMap.Point(address.longitude, address.latitude)
-      baiduMap.pointAdd(point)
-      baiduMap.findPoint(point, 16)
-    },
     assignStaff (staffId) {
       this.staffId = staffId
-      this.checkDealer()
+      this.selectedStaffInfo = this.staffList.find(staff => staff.id === staffId)
     },
     moment,
     dataInit (orderId) {
@@ -219,7 +238,7 @@ export default {
       })
     },
     selectStaffList () {
-      this.$get(`/cos/staff-info/list`).then((r) => {
+      this.$get(`/cos/staff-info/selectStaffByMerchant/${this.currentUser.userId}`).then((r) => {
         this.staffList = r.data.data
       })
     },
@@ -228,7 +247,7 @@ export default {
         this.$message.warn('请选择配送员工')
         return false
       }
-      this.$get(`/cos/order-info/checkDealer`, {orderCode: this.orderInfo.code, staffId: this.staffId}).then((r) => {
+      this.$get(`/cos/furniture-repair-record/repairDistribute`, {repairId: this.orderData.id, staffId: this.staffId}).then((r) => {
         this.$emit('success')
       })
     },
@@ -352,5 +371,120 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 60px;
+}
+
+.staff-list-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 12px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.staff-avatar-item {
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 12px 8px;
+  border-radius: 8px;
+  width: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.staff-avatar-item:hover {
+  background-color: #f0f7ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.15);
+}
+
+.staff-avatar-item.selected {
+  background-color: #e6f7ff;
+  border: 2px solid #1890ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.2);
+}
+
+.staff-name {
+  font-size: 13px;
+  margin-top: 8px;
+  color: #595959;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 70px;
+  font-weight: 500;
+}
+
+.staff-avatar-item:hover .staff-name {
+  color: #1890ff;
+}
+
+.staff-avatar-item.selected .staff-name {
+  color: #1890ff;
+  font-weight: 600;
+}
+
+.selected-staff-info {
+  margin-top: 20px;
+  padding: 16px;
+  background-color: #fafafa;
+  border-radius: 6px;
+}
+
+.section-header {
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #000c17;
+  border-bottom: 1px solid #e8e8e8;
+  padding-bottom: 8px;
+  display: inline-block;
+}
+
+.staff-detail-card {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.staff-avatar {
+  margin-right: 16px;
+}
+
+.staff-details {
+  flex: 1;
+}
+
+.staff-detail-item {
+  margin-bottom: 6px;
+  display: flex;
+}
+
+.staff-detail-item:last-child {
+  margin-bottom: 0;
+}
+
+.detail-label {
+  font-weight: 600;
+  color: #595959;
+  min-width: 50px;
+}
+
+.detail-value {
+  color: #262626;
+  flex: 1;
 }
 </style>

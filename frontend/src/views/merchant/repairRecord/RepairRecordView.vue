@@ -58,14 +58,6 @@
                 </div>
               </a-col>
             </a-row>
-            <a-row :gutter="16">
-              <a-col :span="24">
-                <div class="info-item info-item-full">
-                  <span class="info-label">维修内容：</span>
-                  <span class="info-value">{{ orderData.content }}</span>
-                </div>
-              </a-col>
-            </a-row>
           </a-col>
         </a-col>
         <br/>

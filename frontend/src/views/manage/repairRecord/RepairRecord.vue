@@ -59,7 +59,7 @@
           </template>
         </template>
         <template slot="operation" slot-scope="text, record">
-          <a-icon v-if="record.addressId != null && (record.status == 1 || record.status == 2)" type="setting" theme="twoTone" twoToneColor="#4a9ff5" @click="orderAuditOpen(record)" title="修 改" style="margin-left: 15px"></a-icon>
+          <a-icon type="file-search" @click="orderAuditOpen(record)" title="修 改" style="margin-left: 15px"></a-icon>
         </template>
       </a-table>
     </div>
@@ -137,9 +137,25 @@ export default {
     }),
     columns () {
       return [{
-        title: '维修编号',
-        dataIndex: 'code',
+        title: '维修商家',
+        dataIndex: 'merchantName',
         ellipsis: true
+      }, {
+        title: '家具名称',
+        dataIndex: 'dishesName',
+        ellipsis: true
+      }, {
+        title: '图片',
+        dataIndex: 'dishesName',
+        customRender: (text, record, index) => {
+          if (!record.dishesImages) return <a-avatar shape="square" icon="user" />
+          return <a-popover>
+            <template slot="content">
+              <a-avatar shape="square" size={132} icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.dishesImages.split(',')[0] } />
+            </template>
+            <a-avatar shape="square" icon="user" src={ 'http://127.0.0.1:9527/imagesWeb/' + record.dishesImages.split(',')[0] } />
+          </a-popover>
+        }
       }, {
         title: '用户名称',
         dataIndex: 'userName',
@@ -174,15 +190,16 @@ export default {
           }
         }
       }, {
-        title: '维修家具类型',
-        dataIndex: 'furnitureType',
+        title: '维修类型',
+        dataIndex: 'repairTypeName',
         customRender: (text, row, index) => {
           if (text !== null) {
             return text
           } else {
             return '- -'
           }
-        }
+        },
+        ellipsis: true
       }, {
         title: '订单状态',
         dataIndex: 'status',
@@ -196,16 +213,6 @@ export default {
               return <a-tag>已完成</a-tag>
             default:
               return '- -'
-          }
-        }
-      }, {
-        title: '维修类型',
-        dataIndex: 'repairTypeName',
-        customRender: (text, row, index) => {
-          if (text !== null) {
-            return text
-          } else {
-            return '- -'
           }
         }
       }, {

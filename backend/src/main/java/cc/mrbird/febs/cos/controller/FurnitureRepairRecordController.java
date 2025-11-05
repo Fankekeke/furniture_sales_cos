@@ -129,6 +129,7 @@ public class FurnitureRepairRecordController {
         userInfo.setIntegral(NumberUtil.sub(userInfo.getIntegral(), repairTypeInfo.getIntegral()));
         userInfoService.updateById(userInfo);
 
+        furnitureRepairRecord.setIntegral(repairTypeInfo.getIntegral());
         furnitureRepairRecord.setCode("FR-" + System.currentTimeMillis());
         furnitureRepairRecord.setStatus("1");
         furnitureRepairRecord.setCreateDate(DateUtil.formatDateTime(new Date()));
@@ -142,11 +143,24 @@ public class FurnitureRepairRecordController {
      * @param staffId  员工ID
      * @return 结果
      */
-    @PutMapping("/repairDistribute")
+    @GetMapping("/repairDistribute")
     public R repairDistribute(Integer repairId, Integer staffId) {
         FurnitureRepairRecord furnitureRepairRecord = furnitureRepairRecordService.getById(repairId);
         furnitureRepairRecord.setStatus("2");
         furnitureRepairRecord.setStaffId(staffId);
+        return R.ok(furnitureRepairRecordService.updateById(furnitureRepairRecord));
+    }
+
+    /**
+     * 维修完成
+     *
+     * @param repairId 维修ID
+     * @return 结果
+     */
+    @GetMapping("/repairComplete")
+    public R repairComplete(Integer repairId) {
+        FurnitureRepairRecord furnitureRepairRecord = furnitureRepairRecordService.getById(repairId);
+        furnitureRepairRecord.setStatus("3");
         return R.ok(furnitureRepairRecordService.updateById(furnitureRepairRecord));
     }
 
