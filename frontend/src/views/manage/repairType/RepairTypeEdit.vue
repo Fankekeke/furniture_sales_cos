@@ -1,20 +1,20 @@
 <template>
-  <a-modal v-model="show" title="新增积分权益" @cancel="onClose" :width="800">
+  <a-modal v-model="show" title="修改积分维修" @cancel="onClose" :width="800">
     <template slot="footer">
       <a-button key="back" @click="onClose">
         取消
       </a-button>
       <a-button key="submit" type="primary" :loading="loading" @click="handleSubmit">
-        提交
+        修改
       </a-button>
     </template>
     <a-form :form="form" layout="vertical">
       <a-row :gutter="20">
         <a-col :span="12">
-          <a-form-item label='积分权益名称' v-bind="formItemLayout">
+          <a-form-item label='积分维修名称' v-bind="formItemLayout">
             <a-input v-decorator="[
             'name',
-            { rules: [{ required: true, message: '请输入积分权益名称!' }] }
+            { rules: [{ required: true, message: '请输入积分维修名称!' }] }
             ]"/>
           </a-form-item>
         </a-col>
@@ -27,33 +27,11 @@
           </a-form-item>
         </a-col>
         <a-col :span="24">
-          <a-form-item label='积分权益描述' v-bind="formItemLayout">
+          <a-form-item label='积分维修描述' v-bind="formItemLayout">
             <a-textarea :rows="6" v-decorator="[
             'content',
-             { rules: [{ required: true, message: '请输入积分权益描述!' }] }
+             { rules: [{ required: true, message: '请输入积分维修描述!' }] }
             ]"/>
-          </a-form-item>
-        </a-col>
-        <a-col :span="24">
-          <a-form-item label='图册' v-bind="formItemLayout">
-            <a-upload
-              name="avatar"
-              action="http://127.0.0.1:9527/file/fileUpload/"
-              list-type="picture-card"
-              :file-list="fileList"
-              @preview="handlePreview"
-              @change="picHandleChange"
-            >
-              <div v-if="fileList.length < 8">
-                <a-icon type="plus" />
-                <div class="ant-upload-text">
-                  Upload
-                </div>
-              </div>
-            </a-upload>
-            <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
-              <img alt="example" style="width: 100%" :src="previewImage" />
-            </a-modal>
           </a-form-item>
         </a-col>
       </a-row>
@@ -76,9 +54,9 @@ const formItemLayout = {
   wrapperCol: { span: 24 }
 }
 export default {
-  name: 'materialAdd',
+  name: 'materialEdit',
   props: {
-    materialAddVisiable: {
+    materialEditVisiable: {
       default: false
     }
   },
@@ -88,7 +66,7 @@ export default {
     }),
     show: {
       get: function () {
-        return this.materialAddVisiable
+        return this.materialEditVisiable
       },
       set: function () {
       }
@@ -96,6 +74,7 @@ export default {
   },
   data () {
     return {
+      rowId: null,
       formItemLayout,
       form: this.$form.createForm(this),
       loading: false,
@@ -118,6 +97,34 @@ export default {
     picHandleChange ({ fileList }) {
       this.fileList = fileList
     },
+    imagesInit (images) {
+      if (images !== null && images !== '') {
+        let imageList = []
+        images.split(',').forEach((image, index) => {
+          imageList.push({uid: index, name: image, status: 'done', url: 'http://127.0.0.1:9527/imagesWeb/' + image})
+        })
+        this.fileList = imageList
+      }
+    },
+    setFormValues ({...material}) {
+      this.rowId = material.id
+      let fields = ['name', 'content', 'integral']
+      let obj = {}
+      Object.keys(material).forEach((key) => {
+        if (key === 'images') {
+          this.fileList = []
+          this.imagesInit(material['images'])
+        }
+        if (key === 'status') {
+          material[key] = material[key].toString()
+        }
+        if (fields.indexOf(key) !== -1) {
+          this.form.getFieldDecorator(key)
+          obj[key] = material[key]
+        }
+      })
+      this.form.setFieldsValue(obj)
+    },
     reset () {
       this.loading = false
       this.form.resetFields()
@@ -130,14 +137,18 @@ export default {
       // 获取图片List
       let images = []
       this.fileList.forEach(image => {
-        images.push(image.response)
+        if (image.response !== undefined) {
+          images.push(image.response)
+        } else {
+          images.push(image.name)
+        }
       })
       this.form.validateFields((err, values) => {
-        values.merchantId = this.currentUser.userId
+        values.id = this.rowId
         values.images = images.length > 0 ? images.join(',') : null
         if (!err) {
           this.loading = true
-          this.$post('/cos/material-info', {
+          this.$put('/cos/repair-type-info', {
             ...values
           }).then((r) => {
             this.reset()

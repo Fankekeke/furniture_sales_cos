@@ -38,11 +38,11 @@
       </div>
       <br/>
       <a-row style="padding-left: 24px;padding-right: 24px;" v-if="materialInfo != null">
-        <a-col style="margin-bottom: 15px"><span style="font-size: 15px;font-weight: 650;color: #000c17">物品信息</span></a-col>
-        <a-col :span="8"><b>物品名称：</b>
+        <a-col style="margin-bottom: 15px"><span style="font-size: 15px;font-weight: 650;color: #000c17">积分权益信息</span></a-col>
+        <a-col :span="8"><b>积分权益名称：</b>
           {{ materialInfo.name }}
         </a-col>
-        <a-col :span="8"><b>物品编号：</b>
+        <a-col :span="8"><b>积分权益编号：</b>
           {{ materialInfo.code ? materialInfo.code : '- -' }}
         </a-col>
         <a-col :span="8"><b>销量：</b>

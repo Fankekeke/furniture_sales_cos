@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.cos.dao.RepairTypeInfoMapper">
+
+    <!-- 分页获取积分维修保养信息 -->
+    <select id="queryPage" resultType="java.util.LinkedHashMap">
+        select
+        id,
+        code,
+        name,
+        content,
+        images,
+        integral,
+        create_date,
+        sale_num
+        from
+        repair_type_info
+        where 1 = 1
+        <if test="repairTypeInfo.name != null and repairTypeInfo.name != ''">
+            AND name LIKE CONCAT('%',#{repairTypeInfo.name},'%')
+        </if>
+        <if test="repairTypeInfo.code != null and repairTypeInfo.code != ''">
+            AND code LIKE CONCAT('%',#{repairTypeInfo.code},'%')
+        </if>
+        order by create_date desc
+
+    </select>
+</mapper>

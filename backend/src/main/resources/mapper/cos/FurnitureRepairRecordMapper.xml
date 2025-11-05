@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.febs.cos.dao.FurnitureRepairRecordMapper">
+
+    <!-- 分页获取家具维修记录 -->
+    <select id="queryPage" resultType="java.util.LinkedHashMap">
+        SELECT
+        frr.id,
+        frr.CODE,
+        frr.user_id,
+        frr.merchant_id,
+        frr.STATUS,
+        frr.address_id,
+        frr.type_id,
+        frr.staff_id,
+        frr.furniture_type,
+        frr.content,
+        frr.integral,
+        frr.create_date,
+        ui.name as userName,
+        ui.images as userImages,
+        mi.name as merchantName,
+        mi.images as merchantImages,
+        ai.province,
+        ai.city,
+        ai.area,
+        ai.address,
+        si.name,
+        si.images,
+        rti.name AS repairTypeName
+        FROM
+        furniture_repair_record frr
+        LEFT JOIN user_info ui ON (ui.id = frr.user_id)
+        LEFT JOIN merchant_info mi ON (mi.id = frr.merchant_id)
+        LEFT JOIN staff_info si ON (si.id = frr.staff_id)
+        LEFT JOIN address_info ai ON (ai.id = frr.address_id)
+        LEFT JOIN repair_type_info rti ON (rti.id = frr.type_id)
+        WHERE
+        1 = 1
+        <if test="furnitureRepairRecord.userName != null and furnitureRepairRecord.userName != ''">
+            AND ui.name LIKE CONCAT('%',#{furnitureRepairRecord.userName},'%')
+        </if>
+        <if test="furnitureRepairRecord.merchantName != null and furnitureRepairRecord.merchantName != ''">
+            AND mi.name LIKE CONCAT('%',#{furnitureRepairRecord.merchantName},'%')
+        </if>
+        <if test="furnitureRepairRecord.status != null and furnitureRepairRecord.status != ''">
+            AND frr.STATUS = #{furnitureRepairRecord.status}
+        </if>
+        <if test="furnitureRepairRecord.userId != null and furnitureRepairRecord.userId != ''">
+            AND ui.user_id = #{furnitureRepairRecord.userId}
+        </if>
+        <if test="furnitureRepairRecord.merchantId != null and furnitureRepairRecord.merchantId != ''">
+            AND mi.user_id = #{furnitureRepairRecord.merchantId}
+        </if>
+        ORDER BY
+        frr.create_date DESC
+    </select>
+</mapper>

@@ -1,5 +1,5 @@
 <template>
-  <a-modal v-model="show" title="新增物品" @cancel="onClose" :width="800">
+  <a-modal v-model="show" title="新增积分权益" @cancel="onClose" :width="800">
     <template slot="footer">
       <a-button key="back" @click="onClose">
         取消
@@ -11,10 +11,10 @@
     <a-form :form="form" layout="vertical">
       <a-row :gutter="20">
         <a-col :span="12">
-          <a-form-item label='物品名称' v-bind="formItemLayout">
+          <a-form-item label='积分权益名称' v-bind="formItemLayout">
             <a-input v-decorator="[
             'name',
-            { rules: [{ required: true, message: '请输入物品名称!' }] }
+            { rules: [{ required: true, message: '请输入积分权益名称!' }] }
             ]"/>
           </a-form-item>
         </a-col>
@@ -27,10 +27,10 @@
           </a-form-item>
         </a-col>
         <a-col :span="24">
-          <a-form-item label='物品描述' v-bind="formItemLayout">
+          <a-form-item label='积分权益描述' v-bind="formItemLayout">
             <a-textarea :rows="6" v-decorator="[
             'content',
-             { rules: [{ required: true, message: '请输入物品描述!' }] }
+             { rules: [{ required: true, message: '请输入积分权益描述!' }] }
             ]"/>
           </a-form-item>
         </a-col>

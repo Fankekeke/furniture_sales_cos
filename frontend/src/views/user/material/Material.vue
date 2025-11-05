@@ -7,7 +7,7 @@
           <div :class="advanced ? null: 'fold'">
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="物品编号"
+                label="积分权益编号"
                 :labelCol="{span: 5}"
                 :wrapperCol="{span: 18, offset: 1}">
                 <a-input v-model="queryParams.code"/>
@@ -15,7 +15,7 @@
             </a-col>
             <a-col :md="6" :sm="24">
               <a-form-item
-                label="物品名称"
+                label="积分权益名称"
                 :labelCol="{span: 5}"
                 :wrapperCol="{span: 18, offset: 1}">
                 <a-input v-model="queryParams.name"/>
@@ -108,15 +108,15 @@ export default {
     }),
     columns () {
       return [{
-        title: '物品编号',
+        title: '积分权益编号',
         dataIndex: 'code',
         ellipsis: true
       }, {
-        title: '物品名称',
+        title: '积分权益名称',
         dataIndex: 'name',
         ellipsis: true
       }, {
-        title: '物品图片',
+        title: '积分权益图片',
         dataIndex: 'images',
         customRender: (text, record, index) => {
           if (!record.images) return <a-avatar shape="square" icon="user" />
@@ -128,7 +128,7 @@ export default {
           </a-popover>
         }
       }, {
-        title: '物品描述',
+        title: '积分权益描述',
         dataIndex: 'content',
         customRender: (text, row, index) => {
           if (text !== null) {
@@ -188,7 +188,7 @@ export default {
         userId: this.currentUser.userId,
         integral: row.integral
       }).then((r) => {
-        this.$message.success('兑换物品成功')
+        this.$message.success('兑换积分权益成功')
         this.selectDetailByUserId()
         this.fetch()
       })
@@ -212,7 +212,7 @@ export default {
     },
     handlematerialAddSuccess () {
       this.materialAdd.visiable = false
-      this.$message.success('新增物品成功')
+      this.$message.success('新增积分权益成功')
       this.search()
     },
     edit (record) {
@@ -224,7 +224,7 @@ export default {
     },
     handlematerialEditSuccess () {
       this.materialEdit.visiable = false
-      this.$message.success('修改物品成功')
+      this.$message.success('修改积分权益成功')
       this.search()
     },
     handleDeptChange (value) {

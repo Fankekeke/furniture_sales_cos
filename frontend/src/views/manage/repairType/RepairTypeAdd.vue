@@ -1,5 +1,5 @@
 <template>
-  <a-modal v-model="show" title="新增积分权益" @cancel="onClose" :width="800">
+  <a-modal v-model="show" title="新增积分维修" @cancel="onClose" :width="800">
     <template slot="footer">
       <a-button key="back" @click="onClose">
         取消
@@ -11,10 +11,10 @@
     <a-form :form="form" layout="vertical">
       <a-row :gutter="20">
         <a-col :span="12">
-          <a-form-item label='积分权益名称' v-bind="formItemLayout">
+          <a-form-item label='积分维修名称' v-bind="formItemLayout">
             <a-input v-decorator="[
             'name',
-            { rules: [{ required: true, message: '请输入积分权益名称!' }] }
+            { rules: [{ required: true, message: '请输入积分维修名称!' }] }
             ]"/>
           </a-form-item>
         </a-col>
@@ -27,33 +27,11 @@
           </a-form-item>
         </a-col>
         <a-col :span="24">
-          <a-form-item label='积分权益描述' v-bind="formItemLayout">
+          <a-form-item label='积分维修描述' v-bind="formItemLayout">
             <a-textarea :rows="6" v-decorator="[
             'content',
-             { rules: [{ required: true, message: '请输入积分权益描述!' }] }
+             { rules: [{ required: true, message: '请输入积分维修描述!' }] }
             ]"/>
-          </a-form-item>
-        </a-col>
-        <a-col :span="24">
-          <a-form-item label='图册' v-bind="formItemLayout">
-            <a-upload
-              name="avatar"
-              action="http://127.0.0.1:9527/file/fileUpload/"
-              list-type="picture-card"
-              :file-list="fileList"
-              @preview="handlePreview"
-              @change="picHandleChange"
-            >
-              <div v-if="fileList.length < 8">
-                <a-icon type="plus" />
-                <div class="ant-upload-text">
-                  Upload
-                </div>
-              </div>
-            </a-upload>
-            <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
-              <img alt="example" style="width: 100%" :src="previewImage" />
-            </a-modal>
           </a-form-item>
         </a-col>
       </a-row>
@@ -137,7 +115,7 @@ export default {
         values.images = images.length > 0 ? images.join(',') : null
         if (!err) {
           this.loading = true
-          this.$post('/cos/material-info', {
+          this.$post('/cos/repair-type-info', {
             ...values
           }).then((r) => {
             this.reset()
