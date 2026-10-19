@@ -1,17 +1,17 @@
-### 基于SpringBoot + Vue的家具销售平台.
+![](https://img.shields.io/badge/License-MIT-blue.svg)
 
-家具商城系统、线上家具店、家具销售系统、家居电商平台、实木家具批发
+![](https://img.shields.io/badge/Version-1.0.0-brightgreen.svg)
 
-##### 管理员： 
-用户收货地址，公告管理，家具管理，家具类型，订单评价，积分兑换，物品积分，会员积分，商家管理，商家会员，订单管理，员工管理，用户管理，帖子审核，数据统计
+![](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 
-##### 商家： 
-数据统计，家具管理，订单评价，订单管理，员工管理，商家会员，商家信息管理
+# 基于 SpringBoot + Vue  的家具定制销售平台
 
-##### 用户：
-用户注册，个人信息修改，收货地址，订单下单，订单评价，商品收藏，帖子发布与评论，论坛发帖，支付为支付宝沙盒支付
+家具选购 · 定制报价 · 多商家入驻 · 积分体系 · 社区论坛 | 面向家具零售、定制服务与商家运营的一体化平台
+
+本项目是一套基于 **Spring Boot + Vue** 的家具销售平台，采用前后端分离架构，覆盖 **管理员、商家、用户** 三类核心角色。系统围绕"家具展示 → 选购下单 → 在线支付 → 定制报价 → 积分兑换 → 社区互动 → 数据统计"的完整业务闭环设计，打通家具零售、定制服务、商家运营与用户社区，实现家具销售的线上化、定制化与社交化。
 
 #### 安装环境
+️**注意**：请确保您的开发环境已安装以下依赖。
 
 JAVA 环境 
 
@@ -19,24 +19,160 @@ Node.js环境 [https://nodejs.org/en/] 选择14.17
 
 Yarn 打开cmd， 输入npm install -g yarn !!!必须安装完毕nodejs
 
-Mysql 数据库 [https://blog.csdn.net/qq_40303031/article/details/88935262] 一定要把账户和密码记住
+Mysql 数据库 一定要把账户和密码记住
 
 redis
 
-Idea 编译器 [https://blog.csdn.net/weixin_44505194/article/details/104452880]
+Idea 编译器
 
-WebStorm OR VScode 编译器 [https://www.jianshu.com/p/d63b5bae9dff]
+WebStorm OR VScode 编译器
 
 #### 采用技术及功能
 
 后端：SpringBoot、MybatisPlus、MySQL、Redis、
 前端：Vue、Apex、Antd、Axios
 
-平台前端：vue(框架) + vuex(全局缓存) + rue-router(路由) + axios(请求插件) + apex(图表)  + antd-ui(ui组件)
+平台前端：vue(框架) + vuex(全局缓存) + rue-router(路由) + axios(请求插件) + apex(图表)  + antd-ui(ui组件) + 百度地图 API
 
 平台后台：springboot(框架) + redis(缓存中间件) + shiro(权限中间件) + mybatisplus(orm) + restful风格接口 + mysql(数据库)
 
 开发环境：windows10 or windows7 ， vscode or webstorm ， idea + lambok
+
+---
+
+## 核心特性
+
+- **多商家入驻体系**：支持商家自主入驻、信息维护、家具上架与订单管理，平台统一管理商家资质与运营规范，形成"平台统筹 + 商家自营"的双层运营模式。
+- **家具定制报价**：用户可提交定制需求（尺寸、材质、风格、数量），商家在线评估并返回报价单，支持多轮沟通与报价确认，覆盖沙发、桌椅、柜类等常见定制场景。
+- **支付宝沙盒支付**：集成支付宝沙盒环境，用户下单后可通过沙盒账号完成支付模拟，无需真实资金流转，适合毕业设计与开发测试阶段。
+- **积分兑换体系**：用户通过下单、签到、发帖等行为获取积分，可在积分商城兑换家具配件、优惠券或实物礼品，提升用户活跃度与复购率。
+- **社区论坛**：用户可发布装修心得、家具搭配帖，评论互动，管理员审核帖子内容，构建家具爱好者交流社区。
+---
+
+## 适用场景
+
+- 家具品牌线上直销平台
+- 多商家家具集合电商平台
+- 家具定制服务对接平台
+- 家具爱好者社区 + 商城
+- 计算机类毕业设计/课程设计项目
+---
+
+## 功能模块概览
+
+## 管理员端
+
+管理员为平台运营中枢，负责全局管控：
+
+### 基础管理
+
+- **用户管理**：管理注册用户，包括用户ID、昵称、手机号、注册时间、积分余额、账户状态，支持账户冻结/解冻。
+- **用户收货地址**：查看用户收货地址列表（省市区、详细地址、联系人、手机号），支持异常地址清理。
+- **公告管理**：发布平台公告，包括公告标题、内容、类型（活动通知/系统维护/新品上线）、发布时间、置顶状态。
+
+### 家具与分类
+
+- **家具管理**：管理全平台家具商品，包括家具名称、所属商家、分类、价格、库存、规格（尺寸/材质/颜色）、家具图片、上下架状态，支持批量操作。
+- **家具类型**：管理家具分类体系，支持多级分类（如客厅→沙发/茶几；卧室→床/衣柜），设置分类排序与状态。
+
+### 商家与会员
+
+- **商家管理**：审核商家入驻申请，管理商家信息（商家名称、联系人、联系电话、营业执照、店铺状态），支持商家冻结/解冻。
+- **商家会员**：管理商家会员等级体系，包括等级名称、权益（如佣金优惠、优先展示、定制接单优先权）、升级条件。
+
+### 订单与评价
+
+- **订单管理**：查看全平台订单，包括订单号、用户、商家、家具明细、订单金额、支付状态、物流状态、订单状态（待支付/已支付/已发货/已完成/已取消/已退款），支持订单干预与退款处理。
+- **订单评价**：查看用户对订单的评价，包括评分、评价内容、评价图片，支持屏蔽违规评价。
+
+### 积分体系
+
+- **物品积分**：配置可兑换物品的积分值，包括物品名称、所需积分、库存、兑换规则。
+- **会员积分**：管理用户积分账户，查看积分获取记录（下单、签到、发帖）与消耗记录（兑换、抵扣），支持手动调整积分。
+- **积分兑换**：查看用户积分兑换记录，包括兑换物品、消耗积分、兑换时间、配送状态。
+
+### 社区与统计
+
+- **帖子审核**：审核用户发布的论坛帖子，包括标题、内容、图片，支持通过/拒绝操作，维护社区内容质量。
+- **员工管理**：管理平台运营员工，包括员工姓名、工号、角色（内容审核/订单管理/商家管理）、账户状态。
+- **数据统计**：综合数据看板，展示平台总销售额、订单量、用户数、商家数、热门家具排行、积分兑换趋势等，支持按时间段筛选与图表可视化。
+
+## 商家端
+
+商家通过专属后台管理店铺运营：
+
+### 店铺管理
+
+- **商家信息管理**：维护店铺基本信息，包括店铺名称、Logo、简介、联系电话、发货地址、营业时间。
+- **商家会员**：查看当前会员等级与权益，了解升级进度，申请等级提升。
+
+### 家具与定制
+
+- **家具管理**：管理本店家具商品，包括家具上架/下架、价格调整、库存管理、规格设置、图片上传，支持家具详情富文本编辑。
+- **家具定制报价**：查看用户提交的定制需求，评估后提交报价单（含材质、尺寸、工期、总价），支持与用户在线沟通，报价确认后生成定制订单。
+
+### 订单与统计
+
+- **订单管理**：查看本店订单，包括待发货、已发货、已完成订单，支持发货操作（填写物流单号）、订单详情查看、退款处理。
+- **订单评价**：查看用户对本店订单的评价，支持回复评价，维护店铺口碑。
+- **数据统计**：店铺数据看板，展示本店销售额、订单量、热门家具排行、用户评价统计，支持按时间段筛选。
+- **员工管理**：管理店铺员工，包括员工姓名、账号、角色（客服/仓库/运营）、权限分配。
+
+## 用户端
+
+用户通过 Web 端进行家具选购、定制与社区互动：
+
+### 账户与个人
+
+- **用户注册**：支持手机号+验证码注册与登录，支持账号密码登录。
+- **个人信息修改**：维护个人基本信息，包括昵称、头像、手机号、密码修改。
+- **收货地址**：管理个人收货地址，支持新增、编辑、删除、设置默认地址，支持省市区三级联动选择。
+
+### 家具选购
+
+- **家具浏览**：按分类浏览家具，支持关键词搜索、价格排序、销量排序、筛选（材质/风格/品牌），查看家具详情（多图、规格、参数、用户评价）。
+- **商品收藏**：收藏感兴趣的家具，支持在个人中心查看收藏列表并取消收藏。
+- **订单下单**：将家具加入购物车或直接购买，填写/选择收货地址，提交订单。
+- **支付宝沙盒支付**：通过支付宝沙盒环境完成支付模拟，支付成功后订单状态自动更新。
+- **订单管理**：查看个人订单列表，包括订单状态（待支付/已支付/已发货/已完成/已取消），支持确认收货、申请退款、删除订单。
+- **订单评价**：对已完成的订单进行评价，包括评分、评价内容、图片上传。
+
+### 定制服务
+
+- **家具定制**：提交定制需求，包括家具类型、尺寸要求、材质偏好、风格描述、数量、预算范围、参考图片，等待商家报价。
+- **定制报价查看**：查看商家返回的报价单，支持接受报价（生成定制订单）或拒绝/协商修改。
+
+### 积分与社区
+
+- **积分中心**：查看个人积分余额、积分获取记录、积分消耗记录，浏览可兑换物品并提交兑换。
+- **论坛发帖**：发布论坛帖子，包括标题、内容、图片，分享装修心得、家具搭配经验。
+- **帖子评论**：浏览论坛帖子，发表评论，回复其他用户评论，点赞帖子。
+
+---
+
+## 项目结构
+
+```text
+pharmacy-dispensing-system/
+├── backend/            # 后端 API 服务
+│   ├── src/
+│   │   ├── controllers/  # 控制器
+│   │   ├── models/       # 数据模型
+│   │   ├── routes/       # 路由
+│   │   └── services/     # 业务逻辑
+│   └── package.json
+├── frontend/           # 前端 Web 应用
+│   ├── src/
+│   │   ├── views/      # 页面视图
+│   │   ├── components/ # 公共组件
+│   │   └── store/      # 状态管理
+│   └── package.json
+├── docs/               # 项目文档与 API 接口说明
+├── LICENSE
+└── README.md
+```
+---
+
 
 #### 前台启动方式
 安装所需文件 yarn install 
@@ -45,32 +181,27 @@ WebStorm OR VScode 编译器 [https://www.jianshu.com/p/d63b5bae9dff]
 #### 默认后台账户密码
 [管理员]
 admin
-1234qwer
-
-[商家管理员]
-shangjia
-1234qwer
+123456
 
 [用户]
 fank
-1234qwer
+123456
 
 #### 项目截图
-
 |  |  |
 |---------------------|---------------------|
-| ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1725153101917.png) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1725153580458.png) |
-| ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1725154173768.png) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1725153562930.png) |
-| ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1725153939901.png) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1725153548220.png) |
-| ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1725153905308.png) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1725153504617.png) |
-| ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1725153879407.png) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1725153468723.png) |
-| ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1725153810745.png) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1725153450030.png) |
-| ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1725153782847.png) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1725153434742.png) |
-| ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1725153747060.png) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1725153415062.png) |
-| ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1725153672982.png) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1725153404097.png) |
-| ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1725153652662.png) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1725153362753.png) |
-| ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1725153632512.png) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1725153310432.png) |
-| ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1725153603322.png) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/work/936e9baf53eb9a217af4f89c616dc19.png) |
+| ![](./assets/image%20(1).png) | ![](./assets/image%20(2).png) |
+| ![](./assets/image%20(3).png) | ![](./assets/image%20(4).png) |
+| ![](./assets/image%20(5).png) | ![](./assets/image%20(6).png) |
+| ![](./assets/image%20(7).png) | ![](./assets/image%20(8).png) |
+| ![](./assets/image%20(9).png) | ![](./assets/image%20(10).png) |
+| ![](./assets/image%20(11).png) | ![](./assets/image%20(12).png) |
+| ![](./assets/image%20(13).png) | ![](./assets/image%20(14).png) |
+| ![](./assets/image%20(15).png) | ![](./assets/image%20(16).png) |
+| ![](./assets/image%20(17).png) | ![](./assets/image%20(18).png) |
+| ![](./assets/image%20(19).png) | ![](./assets/image%20(20).png) |
+| ![](./assets/image%20(21).png) | ![](./assets/image%20(22).png) |
+| ![](./assets/image%20(23).png) | 
 
 #### 演示视频
 
@@ -88,10 +219,10 @@ WeChat: `Storm_Berserker`
 
 > 项目部署调试不好包退！功能逻辑没讲明白包退！
 
-![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/work/936e9baf53eb9a217af4f89c616dc19.png#pic_center)
-
+<div align=center><img align="center" src="./assets/product_word.png" alt="fankekeke" /></div>
 
 #### 其它资源
+[2026年-答辩顺利通过-客户评价🀄](https://berserker287.github.io/2026/06/29/2026%E5%B9%B4%E7%AD%94%E8%BE%A9%E9%A1%BA%E5%88%A9%E9%80%9A%E8%BF%87/)
 
 [2025年-答辩顺利通过-客户评价🍜](https://berserker287.github.io/2025/06/18/2025%E5%B9%B4%E7%AD%94%E8%BE%A9%E9%A1%BA%E5%88%A9%E9%80%9A%E8%BF%87/)
 
@@ -115,4 +246,8 @@ WeChat: `Storm_Berserker`
 
 More info: [悲伤的橘子树](https://berserker287.github.io/)
 
-<p><img align="center" src="https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/%E5%90%88%E4%BD%9C%E7%89%A9%E6%96%99%E6%A0%B7%E5%BC%8F%20(3).png" alt="fankekeke" /></p>
+<div align="center"><img align="center" src="./assets/chat_qr_code.png" alt="fankekeke" width=250 /></div>
+
+<p><img align="center" src="./assets/wechat_group.png" alt="fankekeke" /></p>
+
+**感谢查看**
